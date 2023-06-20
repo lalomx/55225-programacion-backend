@@ -1,0 +1,8 @@
+{
+  "nombre": "Producto 1",
+  "stock": 10,
+  "modelo": 2023,
+  "precio": 34,
+  "sku": "AAAA000123",
+  "currency": "USD"
+}

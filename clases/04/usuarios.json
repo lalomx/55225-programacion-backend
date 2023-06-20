@@ -1,0 +1,37 @@
+[
+  {
+    "nombre": "lalo",
+    "apellido": "velazquez",
+    "edad": 30,
+    "curso": "backend",
+    "id": 1
+  },
+  {
+    "nombre": "lalo",
+    "apellido": "velazquez",
+    "edad": 30,
+    "curso": "backend",
+    "id": 2
+  },
+  {
+    "nombre": "lalo",
+    "apellido": "velazquez",
+    "edad": 30,
+    "curso": "backend",
+    "id": 3
+  },
+  {
+    "nombre": "lalo",
+    "apellido": "velazquez",
+    "edad": 30,
+    "curso": "backend",
+    "id": 4
+  },
+  {
+    "nombre": "lalo",
+    "apellido": "velazquez",
+    "edad": 30,
+    "curso": "backend",
+    "id": 5
+  }
+]
