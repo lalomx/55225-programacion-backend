@@ -1,0 +1,14 @@
+{
+  "name": "mi-programa",
+  "version": "1.0.0",
+  "description": "clase 05",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "1.6.0"
+  }
+}
