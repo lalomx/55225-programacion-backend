@@ -24,6 +24,10 @@ class ProductManager {
 
     return this.products
   }
+
+  /// funcion que escriba datos
+  /// funcion que elimine datos
+  /// function modifique datos
 }
 
 // exporto la clase ProductManager
