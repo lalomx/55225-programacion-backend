@@ -1,0 +1,12 @@
+HTTP 1.1
+POST http://localhost:3000/api/productos?query=key1=val1&key1=val2
+User-Agent POSTMAN
+HEADER2    valor
+
+{
+    "title": "Lego Batman",
+    "description": "A very long description",
+    "price": 19.99,
+    "stock": 15,
+    "keywords": ["lego", "batman"]
+}
