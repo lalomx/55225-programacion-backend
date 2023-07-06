@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css" type="text/css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <a href="/"><li>Inicio</li></a>
+        <a href="/mascotas"><li>Agregar mascota</li></a>
+      </ul>
+    </nav>
+    <div class="container">
+      <form action="/mascotas" enctype="multipart/form-data" method="post">
+        <div>
+          <label for="name">Nombre </label>
+          <input name="name" />
+        </div>
+        <div>
+          <label for="type">Tipo </label>
+          <select name="type" >
+            <option value="cat">Gato</option>
+            <option value="dog">Perro</option>
+          </select>
+        </div>
+        <div>
+          <label for="img">Imagen </label>
+          <input type="file" name="img" />
+        </div>
+
+        <div>
+          <button type="submit">Enviar</button>
+        </div>
+      </form>
+
+      <form action="/mascotas/multiple" enctype="multipart/form-data" method="post">
+        <p>Sube muchos archivos</p>
+        <div>
+          <label for="name">Nombre </label>
+          <input name="name" />
+        </div>
+        <div>
+          <label for="img">Imagen </label>
+          <input type="file" name="img" multiple/>
+        </div>
+
+        <div>
+          <button type="submit">Enviar</button>
+        </div>
+      </form>
+    </div>
+    
+  </body>
+</html>

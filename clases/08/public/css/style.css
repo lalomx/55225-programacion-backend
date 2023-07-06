@@ -1,0 +1,49 @@
+html {
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: #e3e3e3;
+}
+
+body div.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 50px;
+  align-items: center;
+}
+
+h1 {
+  font-size: 36px
+}
+
+img {
+  width: 600px
+}
+
+form div {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+form div label {
+  margin-bottom: 5px;
+}
+
+nav {
+  width: 100%;
+  height: 50px;
+  padding: 15px;
+  display: flex;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  width: 100%;
+  justify-content: center;
+}
+
+nav ul li {
+  width: 150px;
+}
