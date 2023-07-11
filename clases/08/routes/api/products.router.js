@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const ProductManager = require('../../managers/ProductManager')
+const { aumentaContador } = require('../../middlewares')
 
 const productManager = new ProductManager('productos.json')
 const router = Router()
@@ -9,7 +10,9 @@ const router = Router()
 // rutas de productos
 
 // /api/products/:id
-router.get('/:id', async (req, res) => {
+router.get('/:id', aumentaContador, async (req, res) => {
+  console.log('el contador es ', req.contador)
+
   const { id } = req.params
 
   const product = await productManager.getById(id)
