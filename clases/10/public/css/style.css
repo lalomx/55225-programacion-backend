@@ -1,0 +1,42 @@
+html {
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: #c5ddeb;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+}
+
+body div.uk-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 50px;
+  align-items: stretch;
+  height: 100%;
+  padding: 15px;
+}
+
+
+.align-right {
+  text-align: right;
+}
+
+
+h1 {
+  font-size: 36px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.align-cart {
+  align-items: baseline;
+}
