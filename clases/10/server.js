@@ -1,9 +1,16 @@
+const http = require('http')
 const express = require('express')
-const Routes = require('./routes/index.js')
 const path = require('path')
 const handlebars = require('express-handlebars')
+const { Server } = require("socket.io");
+
+const Routes = require('./routes/index.js')
+const ProductManager = require('./managers/ProductManager.js')
 
 const app = express()
+const server = http.createServer(app)
+const io = new Server(server);
+const productManager = new ProductManager('productos.json')
 
 app.engine('handlebars', handlebars.engine()) // registramos handlebars como motor de plantillas
 app.set('views', path.join(__dirname, '/views')) // el setting 'views' = directorio de vistas
@@ -43,8 +50,32 @@ app.use('/api', Routes.api)
 // static files
 // subir archivos estaticos 
 
+// web socket management
+io.on('connection', (socket) => {
+  console.log(`nuevo usuario conectado ${socket.id}`)
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  });
+
+  setTimeout( async () => {
+    const videogame = await productManager.getRandom()
+    socket.emit('promo', { title: videogame.title, sale: 20 })
+  }, 700)
+  
+  
+
+  socket.on('promo', () => {
+    setTimeout( async () => {
+      const videogame = await productManager.getRandom()
+      socket.emit('promo', { title: videogame.title, sale: 20 })
+    }, 700)
+  })
+  
+})
+
 const port = 3000
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Express Server listening at http://localhost:${port}`)
 })
