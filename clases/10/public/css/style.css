@@ -40,3 +40,16 @@ h1 {
 .align-cart {
   align-items: baseline;
 }
+
+#rebaja-banner {
+  min-height: 35px;
+  background-color: #FEDC60;
+  visibility: hidden;
+  display: none;
+  border-radius: 4px;
+}
+
+#rebaja-banner .uk-card-body {
+  align-items: baseline;
+  justify-content: space-between;
+}

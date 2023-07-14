@@ -1,6 +1,10 @@
 const fs = require('fs/promises')
 const path = require('path')
 
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 class ProductManager {
 
   #products = []
@@ -81,6 +85,13 @@ class ProductManager {
     this.#products = this.#products.filter(p => p.id != id)
 
     await this.#writeFile()
+  }
+
+  async getRandom() {
+    await this.#readFile()
+
+    const randomId = getRandomNumber(0, this.#products.length - 1)
+    return this.#products[randomId]
   }
 }
 

@@ -18,7 +18,7 @@
               <a href="/">Home</a>
             </li>
             <li>
-              <a href="/carrito">Carrito<span id="cart-badge" class="uk-label">1</span></a>
+              <a href="/carrito">Carrito<span id="cart-badge" class="uk-label">0</span></a>
             </li>
             {{#if user}}
               <li>
@@ -42,9 +42,20 @@
       </nav>
       <div class="uk-width-1-1 uk-margin-remove uk-align-center uk-text-break uk-padding">
         <h2 id="page-title">{{ title }}</h2>
+        <div class="uk-width-1-1 uk-align-center" uk-grid>
+          <button class="uk-button" onclick="refreshPromo()">Refresh</button>
+          <div id="rebaja-banner" class="uk-card uk-card-default uk-width-1-1">
+            <div class="uk-card-body uk-flex">
+              <span id="title"></span>
+              <span class="uk-badge" id="sale"></span>
+            </div>
+          </div>
+        </div>
         {{{body}}}
       </div>
     </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/static/js/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/js/uikit-icons.min.js"></script>
   </body>
