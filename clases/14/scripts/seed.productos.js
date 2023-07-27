@@ -15,11 +15,7 @@ async function seed() {
 
   const filepath = path.join(__dirname, '../', 'data/productos.json')
   const data = await fs.readFile(filepath, 'utf-8')
-  const products = JSON.parse(data).map(p => {
-    const { id, ...product } = p
-
-    return product
-  })
+  const products = JSON.parse(data).map(({ id, ...product }) => product)
 
   const result = await productModel.insertMany(products)
 
