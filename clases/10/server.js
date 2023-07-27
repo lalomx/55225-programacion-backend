@@ -43,7 +43,10 @@ app.use((req, res, next) => {
 
 // router
 app.use('/', Routes.home)
-app.use('/api', Routes.api)
+app.use('/api', (req, res, next) => {
+  req.io = io
+  next()
+}, Routes.api)
 
 // middlewares
 // static files

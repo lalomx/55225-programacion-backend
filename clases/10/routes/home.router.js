@@ -25,6 +25,22 @@ router.get('/', async (req, res) => {
   })
 })
 
+router.get('/realtimeproducts', async (req, res) => {
+  // res.sendFile(path.join(__dirname, '../public/index.html'))
+  const products = await productManager.getAll()
+  // const randomId = getRandomNumber(0, products.length - 1)
+
+  res.render('realTimeProducts', {
+    title: 'Real Time',
+    products,
+    user: {
+      ...req.user,
+      isAdmin: req.user.role == 'admin',
+    },
+    style: 'home'
+  })
+})
+
 router.get('/carrito', (req, res) => {
   // res.sendFile(path.join(__dirname, '../public/carrito.html'))
   res.render('carrito', {

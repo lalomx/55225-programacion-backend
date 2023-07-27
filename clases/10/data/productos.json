@@ -140,9 +140,16 @@
     ]
   },
   {
-    "title": "Legend of Zelda",
-    "price": "32",
-    "description": "Link en Hyrule",
+    "title": "Fable",
+    "description": "Magic world",
+    "price": 79.99,
+    "stock": 5,
+    "keywords": [
+      "adventure",
+      "magic",
+      "heroes",
+      "good and bad"
+    ],
     "id": 11
   }
 ]
