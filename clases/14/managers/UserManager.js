@@ -76,6 +76,8 @@ class ProductManager {
   async delete(id) {
     await this.#readFile()
 
+    /// operadores
+
     this.#users = this.#users.filter(p => p.id != id)
 
     await this.#writeFile()
