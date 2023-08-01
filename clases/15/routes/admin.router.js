@@ -1,6 +1,5 @@
 const { Router } = require('express')
-const ProductManager = require('../managers/product.manager')
-const productManager = new ProductManager('productos.json')
+const productManager = require('../managers/product.manager')
 
 const router = Router()
 

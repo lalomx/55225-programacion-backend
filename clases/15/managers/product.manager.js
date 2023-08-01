@@ -1,98 +1,41 @@
 const fs = require('fs/promises')
-const path = require('path')
+
+const productModel = require('../models/product.model')
 
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 class ProductManager {
-
-  #products = []
-
   constructor(filename) {
-    this.filename = filename
-    this.filepath = path.join(__dirname, '../data',this.filename)
+    this.id = getRandomNumber(1, 10) // el id debe de ser el mismo ya que es un singleton
   }
 
-  #readFile = async () => {
-    const data = await fs.readFile(this.filepath, 'utf-8')
-    this.#products = JSON.parse(data)
-  }
-
-  #writeFile = async() => {
-    const data = JSON.stringify(this.#products, null, 2)
-    await fs.writeFile(this.filepath, data)
-  }
-
-  async getAll() {
-    await this.#readFile()
-
-    return this.#products
+  getAll() {
+    return productModel.find().lean()
   }
 
   async getById(id) {
-    await this.#readFile()
+    const products = await productModel.find({ _id: id })
 
-    return this.#products.find(p => p.id == id)
+    return products[0]
   }
 
-  async create(product) {
-    await this.#readFile()
-
-    const id = (this.#products[this.#products.length - 1]?.id || 0) + 1
-
-    const newProduct = {
-      ...product,
-      id
-    }
-
-    this.#products.push(newProduct)
-
-    await this.#writeFile()
-
-    return newProduct
+  async create(body) {
+    return productModel.create(body)
   }
 
-  async save(id, product) {
-    await this.#readFile()
+  async update(id, product) {
+    const result = await productModel.updateOne({ _id: id }, product)
 
-    const existing = await this.getById(id)
-
-    if (!existing) {
-      return
-    }
-
-    const {
-      title,
-      description,
-      stock,
-      price,
-      keywords
-    } = product
-
-    existing.title = title
-    existing.description = description
-    existing.stock = stock
-    existing.price = price
-    existing.keywords = keywords
-
-    await this.#writeFile()
+    return result
   }
 
   async delete(id) {
-    await this.#readFile()
+    const result = await productModel.deleteOne({ _id: id })
 
-    this.#products = this.#products.filter(p => p.id != id)
-
-    await this.#writeFile()
-  }
-
-  async getRandom() {
-    await this.#readFile()
-
-    const randomId = getRandomNumber(0, this.#products.length - 1)
-    return this.#products[randomId]
+    return result
   }
 }
 
-module.exports = ProductManager
+module.exports = new ProductManager() // singleton

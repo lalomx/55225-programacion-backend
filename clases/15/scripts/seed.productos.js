@@ -11,7 +11,7 @@ const mongoose = require('mongoose')
 const productModel = require('../models/product.model')
 
 async function seed() {
-  await mongoose.connect("mongodb+srv://app2:3FF28JfLw8z5Sh1m@cluster0.go6w7.mongodb.net/?retryWrites=true&w=majority")
+  await mongoose.connect("mongodb+srv://app2:3FF28JfLw8z5Sh1m@cluster0.go6w7.mongodb.net/ecommerce?retryWrites=true&w=majority")
 
   const filepath = path.join(__dirname, '../', 'data/productos.json')
   const data = await fs.readFile(filepath, 'utf-8')
@@ -20,6 +20,8 @@ async function seed() {
   const result = await productModel.insertMany(products)
 
   console.log(result)
+
+  await mongoose.disconnect()
 }
 
 seed()

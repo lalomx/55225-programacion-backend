@@ -1,10 +1,9 @@
 const { Router } = require('express')
-const ProductManager = require('../../managers/product.manager')
-const productModel = require('../../models/product.model')
+const productManager = require('../../managers/product.manager')
 
 const router = Router()
-const productManager = new ProductManager('productos.json')
 
+console.log("product manager id: ", productManager.id)
 router.get('/:id', async (req, res) => {
   const { id } = req.params
 
@@ -12,10 +11,17 @@ router.get('/:id', async (req, res) => {
   console.log(id)
 
   try {
-    const product = await productModel.findOne({ _id: id})
+    const product = await productManager.getById(id)
+
+    if (!product) {
+      res.sendStatus(404)
+      return
+    }
+
     res.send(product)
-  } catch {
-    res.sendStatus(404)
+  } catch(e) {
+    console.log(e)
+    res.sendStatus(500)
     return
   }
 })
@@ -23,8 +29,7 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
   const { search, max, min, limit } = req.query
   console.log(`Buscando productos con ${search} y entre [${min}, ${max}]`)
-  // const products = await productManager.getAll()
-  const products = await productModel.find()
+  const products = await productManager.getAll()
 
   console.log(products)
 
@@ -46,8 +51,8 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) =>  {
   const { body, io } = req
 
-  // const product = await productManager.create(body)
-  const product = await productModel.create(body)
+  const product = await productManager.create(body)
+
   console.log(product)
 
   // emitir el producto creado
@@ -64,9 +69,7 @@ router.delete('/:id', async (req, res) => {
   //   return
   // }
 
-  // await productManager.delete(id)
-
-  const result = await productModel.deleteOne({ _id: id })
+  const result = await productManager.delete(id)
   console.log(result)
 
   if (result.deletedCount >= 1) {
@@ -82,7 +85,7 @@ router.put('/:id', async (req, res) => {
   const { body } = req
 
   try {
-    const result = await productModel.updateOne({ _id: id }, body)
+    const result = await productManager.update(id, body)
 
     console.log(result)
     if (result.matchedCount >= 1) {

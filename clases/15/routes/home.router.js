@@ -1,7 +1,6 @@
 const { Router } = require('express')
 const path = require('path')
-const ProductManager = require('../managers/product.manager')
-const productManager = new ProductManager('productos.json')
+const productManager = require('../managers/product.manager')
 
 const router = Router()
 
@@ -12,7 +11,8 @@ function getRandomNumber(min, max) {
 router.get('/', async (req, res) => {
   // res.sendFile(path.join(__dirname, '../public/index.html'))
   const products = await productManager.getAll()
-  // const randomId = getRandomNumber(0, products.length - 1)
+
+  console.log("ID del product manager desde home router", productManager.id)
 
   res.render('home', {
     title: 'Home',
@@ -23,6 +23,10 @@ router.get('/', async (req, res) => {
     },
     style: 'home'
   })
+})
+
+router.get('/chat', (req, res) => {
+  res.render('chat')
 })
 
 router.get('/realtimeproducts', async (req, res) => {
@@ -43,6 +47,7 @@ router.get('/realtimeproducts', async (req, res) => {
 
 router.get('/carrito', (req, res) => {
   // res.sendFile(path.join(__dirname, '../public/carrito.html'))
+  // interactuar con el manager de carrito
   res.render('carrito', {
     numItems: 2,
     title: 'Carrito'

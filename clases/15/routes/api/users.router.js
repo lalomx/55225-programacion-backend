@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const UserManager = require('../../managers/UserManager')
+const UserManager = require('../../managers/user.manager')
 
 const router = Router()
 const manager = new UserManager('users.json')
