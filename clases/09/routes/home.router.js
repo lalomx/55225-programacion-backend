@@ -1,9 +1,9 @@
 const { Router } = require('express')
 const path = require('path')
 const ProductManager = require('../managers/ProductManager')
+const productManager = new ProductManager('productos.json')
 
 const router = Router()
-const productManager = new ProductManager('productos.json')
 
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -12,16 +12,25 @@ function getRandomNumber(min, max) {
 router.get('/', async (req, res) => {
   // res.sendFile(path.join(__dirname, '../public/index.html'))
   const products = await productManager.getAll()
-  console.log(products)
+  // const randomId = getRandomNumber(0, products.length - 1)
 
-  res.render('index', {
-    // product: products[getRandomNumber(0, products.length - 1)]
-    products
+  res.render('home', {
+    title: 'Home',
+    products,
+    user: {
+      ...req.user,
+      isAdmin: req.user.role == 'admin',
+    },
+    style: 'home'
   })
 })
 
 router.get('/carrito', (req, res) => {
-  res.render('carrito')
+  // res.sendFile(path.join(__dirname, '../public/carrito.html'))
+  res.render('carrito', {
+    numItems: 2,
+    title: 'Carrito'
+  })
 })
 
 module.exports = router

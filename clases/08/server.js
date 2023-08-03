@@ -1,26 +1,30 @@
 const express = require('express')
-const Routes = require('./routes/index.js')
+const { api, home } = require('./routes')
+const { aumentaContador } = require('./middlewares')
 const path = require('path')
 
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use('/static', express.static(path.join(__dirname + 'public')))
+// /Users/lalovelazquez/projects/coderhouse/55225/55225-programacion-backend/clases/08/public
+app.use('/static', express.static(path.join(__dirname, 'public')))
+app.use(aumentaContador)
+
 // cookie
+
+
 // passport
 // template engines
 // entre otros
 
-// app.get('/api/usuarios', (req, res) => {
-//   res.send('usuarios')
-// })
-
-
-
 // router
-app.use('/', Routes.home)
-app.use('/api', Routes.api)
+app.use('/', home) // vistas
+app.use('/api', aumentaContador, api)
+
+// next
+// res.send
+
 
 // middlewares
 // static files

@@ -1,18 +1,20 @@
 const { Router } = require('express')
-const ProductRoutes = require('./api/products.router.js')
-const UserRoutes = require('./api/users.router.js')
-const HomeRoutes = require('./home.router.js')
+const ProductRouter = require('./api/products.router')
+const UsersRouter = require('./api/usuarios.router')
+const HomeRouter = require('./home.router')
 
-const api = Router();
+// /api
+const router = Router()
 
-api.use('/products', ProductRoutes);
-api.use('/users', UserRoutes);
+// rutas de products
+router.use('/products', ProductRouter)
+// rutas de usuarios
+router.use('/users', UsersRouter)
+// rutas de home - archivos estaticos
 
-const home = Router()
 
-home.use('/', HomeRoutes)
 
 module.exports = {
-  api,
-  home
-};
+  api: router,
+  home: HomeRouter
+}

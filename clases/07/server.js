@@ -3,34 +3,35 @@ import ProductManager from './ProductManager.js'
 
 const app = express()
 const productManager = new ProductManager('productos.json')
-const users = []
 
-app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+// cookie
+// passport
+// template engines
+// entre otros
+
+app.get('/api/usuarios', (req, res) => {
+  res.send('usuarios')
+})
 
 app.get('/api/productos/:id', async (req, res) => {
   const { id } = req.params
 
-  const existing = await productManager.getById(id)
+  const product = await productManager.getById(id)
 
-  console.log(existing)
-
-  if (!existing) {
+  if(!product) {
     res.sendStatus(404)
-
     return
   }
 
-
-  res.send(existing)
+  res.send(product)
 })
 
 app.get('/api/productos', async (req, res) => {
   const { search, max, min, limit } = req.query
   console.log(`Buscando productos con ${search} y entre [${min}, ${max}]`)
   const products = await productManager.getProducts()
-
-  console.log(products.length)
 
   let filtrados = products
 
@@ -47,50 +48,19 @@ app.get('/api/productos', async (req, res) => {
   res.send(filtrados)
 })
 
-app.post('/api/productos', async (req, res) => {
-  const producto = await productManager.saveProduct(req.body)
+app.post('/api/productos', async (req, res) =>  {
+  const { body } = req
 
-  res.send(producto)
-})
-
-app.put('/api/productos/:id', async (req, res) => {
-  const { id } = req.params
-  const product = req.body
-
-  const existing = await productManager.getById(id)
-
-  if (!existing) {
-    res.sendStatus(404)
-
-    return
-  }
-
-  await productManager.save(id, product)
-
-  res.sendStatus(200)
-})
-
-app.post('/api/usuarios', async (req, res) => {
-  const user = req.body
-
-  const id = users[users.length - 1]?.id || 0
-
-  users.push({
-    ...user,
-    id: id + 1
-  })
-
-  res.sendStatus(201)
+  const product = await productManager.create(body)
+  
+  res.status(201).send(product)
 })
 
 app.delete('/api/productos/:id', async (req, res) => {
   const { id } = req.params
 
-  const existing = await productManager.getById(id)
-
-  if (!existing) {
+  if (!await productManager.getById(id)) {
     res.sendStatus(404)
-
     return
   }
 
@@ -99,9 +69,30 @@ app.delete('/api/productos/:id', async (req, res) => {
   res.sendStatus(200)
 })
 
-app.get('/api/usuarios', (req, res) => {
-  res.send(users)
+app.put('/api/productos/:id', async (req, res) => {
+  const { id } = req.params
+  const { body } = req
+
+  try {
+    if (!await productManager.getById(id)) {
+      res.sendStatus(404)
+      return
+    }
+
+    await productManager.save(id, body)
+    res.sendStatus(202)
+  } catch(e) {
+    res.status(500).send({
+      message: "Ha ocurrido un error en el servidor",
+      exception: e.stack
+    })
+  }  
 })
+
+// router
+// middlewares
+// static files
+// subir archivos estaticos 
 
 const port = 3000
 

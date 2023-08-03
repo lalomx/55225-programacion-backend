@@ -1,10 +1,18 @@
 const { Router } = require('express')
 const ProductManager = require('../../managers/ProductManager')
+const { aumentaContador } = require('../../middlewares')
 
-const router = Router()
 const productManager = new ProductManager('productos.json')
+const router = Router()
 
-router.get('/:id', async (req, res) => {
+// merge params
+
+// rutas de productos
+
+// /api/products/:id
+router.get('/:id', aumentaContador, async (req, res) => {
+  console.log('el contador es ', req.contador)
+
   const { id } = req.params
 
   const product = await productManager.getById(id)
@@ -17,6 +25,7 @@ router.get('/:id', async (req, res) => {
   res.send(product)
 })
 
+// /api/products/
 router.get('/', async (req, res) => {
   const { search, max, min, limit } = req.query
   console.log(`Buscando productos con ${search} y entre [${min}, ${max}]`)
@@ -37,6 +46,7 @@ router.get('/', async (req, res) => {
   res.send(filtrados)
 })
 
+// /api/products/
 router.post('/', async (req, res) =>  {
   const { body } = req
 
@@ -45,6 +55,7 @@ router.post('/', async (req, res) =>  {
   res.status(201).send(product)
 })
 
+// /api/products/:id
 router.delete('/:id', async (req, res) => {
   const { id } = req.params
 
@@ -58,6 +69,7 @@ router.delete('/:id', async (req, res) => {
   res.sendStatus(200)
 })
 
+// /api/productos/:id
 router.put('/:id', async (req, res) => {
   const { id } = req.params
   const { body } = req
@@ -77,5 +89,6 @@ router.put('/:id', async (req, res) => {
     })
   }  
 })
+
 
 module.exports = router

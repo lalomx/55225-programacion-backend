@@ -138,5 +138,11 @@
       "customization",
       "resource scavenging"
     ]
+  },
+  {
+    "title": "Legend of Zelda",
+    "price": "32",
+    "description": "Link en Hyrule",
+    "id": 11
   }
 ]

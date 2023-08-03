@@ -7,7 +7,7 @@ class ProductManager {
 
   constructor(filename) {
     this.filename = filename
-    this.filepath = path.join(__dirname, '../data',this.filename)
+    this.filepath = path.join(__dirname, '../data', this.filename)
   }
 
   #readFile = async () => {
@@ -82,6 +82,14 @@ class ProductManager {
 
     await this.#writeFile()
   }
+
+  /// funcion que escriba datos
+  /// funcion que elimine datos
+  /// function modifique datos
 }
 
+// exporto la clase ProductManager
 module.exports = ProductManager
+
+// import from
+// export 

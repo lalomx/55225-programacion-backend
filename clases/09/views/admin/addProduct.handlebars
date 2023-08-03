@@ -1,13 +1,12 @@
-<h2>Agregar nuevo producto</h2>
 <div class="uk-margin-top">
-  <form class="uk-form-stacked" action="/admin/add/product" method="POST">
+  <form class="uk-form-stacked" action="/admin/product/add" method="POST">
     <div class="uk-margin">
       <label class="uk-form-label" for="form-stacked-text">Nombre</label>
       <div class="uk-form-controls">
-        <input id="form-stacked-nombre" class="uk-input" type="text" name="name">
+        <input id="form-stacked-nombre" class="uk-input" type="text" name="title">
       </div>
     </div>
-    <div class="uk-margin">
+    {{!-- <div class="uk-margin">
       <label class="uk-form-label" for="form-stacked-select">Plataforma</label>
       <div class="uk-form-controls">
         <select id="form-stacked-plataforma" class="uk-select" name="platform">
@@ -16,7 +15,7 @@
           <option>Nintendo</option>
         </select>
       </div>
-    </div>
+    </div> --}}
     <div class="uk-margin">
       <label class="uk-form-label" for="form-stacked-text">Precio</label>
       <div class="uk-form-controls">
@@ -32,3 +31,5 @@
     <button class="uk-button uk-button-secondary uk-button-small uk-margin-top" type="submit">Agregar</button>
   </form>
   </div>
+
+  <script src="/static/js/admin.js" />

@@ -1,13 +1,19 @@
-const moment = require('moment')
+// const moment = require('moment') // commonjs
+import moment from "moment" // esmodule
 
-function daysFromBirth(date) {
-  const birth = moment(date, "YYYY-MM-DD")
+
+// YYYY-MM-DD
+function diffInDays(input) {
   const now = moment()
+  const date = moment(input, 'YYYY-MM-DD')
 
-  // console.log(now, birth)
+  // date.format('YYYY-MM-DD')
 
-  return now.diff(birth, 'day')
+  return now.diff(date, 'day')
 }
 
+console.log(`Han pasado ${diffInDays('1992-08-06')} años desde tu nacimiento`)
 
-console.log(`Dias desde tu nacimiento: ${daysFromBirth('1992-08-06')}`)
+module.exports = {} // commonjs
+
+export {} // esmodule

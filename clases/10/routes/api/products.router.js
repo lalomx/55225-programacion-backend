@@ -38,9 +38,12 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) =>  {
-  const { body } = req
+  const { body, io } = req
 
   const product = await productManager.create(body)
+
+  // emitir el producto creado
+  io.emit('productoNew', product)
   
   res.status(201).send(product)
 })

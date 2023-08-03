@@ -1,26 +1,28 @@
 const fs = require('fs/promises')
 const path = require('path')
-
-const filename = 'data.txt'
+const filename = 'promesas.txt'
 const filepath = path.join(__dirname, filename)
-const getDate = () => (new Date()).toISOString()
 
 async function main() {
-  console.time('fs')
+  try {
+    await fs.writeFile(filepath, 'promisespromises')
+    console.log('se ha escrito en el archivo')
+    const data = await fs.readFile(filepath, 'utf-8')
+    console.log('la data es', data)
+    const masData = '\n\nmucha mas data'
+    await fs.appendFile(filepath, masData, 'utf-8')
+    console.log('se ha escrito mas data')
+    await fs.unlink(filepath)
+    console.log('se ha borrado el archivo promesas.txt')
+  } catch {
+    console.log('error')
+  }
 
-  await fs.writeFile(filepath, '### INICIO ###')
-  const data = await fs.readFile(filepath, 'utf-8')
-  
-  await fs.writeFile(filepath, `${data}\nhola`)
-  const nuevaData = `
-  
-  ## Otro dia ##
-  ${getDate()}
-  `
-  await fs.appendFile(filepath, nuevaData)
-  await fs.unlink(filepath)
-  
-  console.timeEnd('fs')
 }
 
 main()
+
+
+// JavaScript Object Notation
+
+// XML

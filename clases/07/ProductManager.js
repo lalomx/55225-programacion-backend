@@ -16,7 +16,6 @@ class ProductManager {
 
   #readFile = async () => {
     const data = await fs.readFile(this.filepath, 'utf-8')
-    console.log(data.length)
     this.#products = JSON.parse(data)
   }
 
@@ -37,20 +36,19 @@ class ProductManager {
     return this.#products.find(p => p.id == id)
   }
 
-  /// funcion que escriba datos
-
   async create(product) {
-
     await this.#readFile()
 
     const id = (this.#products[this.#products.length - 1]?.id || 0) + 1
+
     const newProduct = {
       ...product,
       id
     }
+
     this.#products.push(newProduct)
 
-    await this.writeFile()
+    await this.#writeFile()
 
     return newProduct
   }
@@ -60,30 +58,38 @@ class ProductManager {
 
     const existing = await this.getById(id)
 
-    const { 
+    if (!existing) {
+      return
+    }
+
+    const {
       title,
       description,
-      price,
       stock,
+      price,
       keywords
     } = product
 
     existing.title = title
     existing.description = description
     existing.stock = stock
-    existing.keywords = keywords
     existing.price = price
+    existing.keywords = keywords
 
-    this.#writeFile()
+    await this.#writeFile()
   }
 
   async delete(id) {
     await this.#readFile()
 
-    this.#products = this.#products.filter(p => p.id != id) 
+    this.#products = this.#products.filter(p => p.id != id)
 
     await this.#writeFile()
   }
+
+  /// funcion que escriba datos
+  /// funcion que elimine datos
+  /// function modifique datos
 }
 
 // exporto la clase ProductManager

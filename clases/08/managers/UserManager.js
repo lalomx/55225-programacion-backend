@@ -1,7 +1,7 @@
 const fs = require('fs/promises')
 const path = require('path')
 
-class ProductManager {
+class UserManager {
 
   #users = []
 
@@ -82,4 +82,4 @@ class ProductManager {
   }
 }
 
-module.exports = ProductManager
+module.exports = UserManager

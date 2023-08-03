@@ -8,21 +8,37 @@ const auto1 = {
   }
 }
 
-let autoBase = {
+const autoBase = {
   transmision: 'manual',
   combustible: 'gasolina',
   traccion: 'delantera'
 }
 
-const { modelo, km, owner: { nombre } } = auto1
+// let marca = auto1.marca
+// let modelo = auto1.modelo
 
-const auto = { ...auto1, ...autoBase }
+// const { marca, modelo } = auto1
 
-const auto2 = {
-  marca: 'tesla',
-  modelo: 2023,
-  km: 5000,
-  subMarca: 'Model 3',
-}
+// auto1.manufacturer
+// console.log(marca, modelo)
 
-const { marca: marcaTesla, ...rest } = auto2
+// auto1.transmision = autoBase.transmision
+
+const superAuto = { ...auto1, ...autoBase }
+let nombre = 'lalo'
+
+const { 
+  marca,
+  modelo,
+  manufacturer = 'Volkswagen', // asignacion valor por default
+  owner: { nombre: nombreDelDueno }, // destructuracion anidada con renombrar
+  // ...lasdemas,
+} = superAuto
+
+console.log(nombreDelDueno)
+
+// function ({ prop1, prop2 }) {
+//   prop1
+//   prop2
+//   /// operacion
+// }

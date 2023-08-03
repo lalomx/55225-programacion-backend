@@ -1,25 +1,32 @@
 const fs = require('fs')
 const path = require('path')
-
 const filename = 'data.txt'
 const filepath = path.join(__dirname, filename)
-const getDate = () => (new Date()).toISOString()
 
-console.time('fs')
+console.log('inicio')
 
 fs.writeFileSync(filepath, '### INICIO ###')
-const data = fs.readFileSync(filepath)
-fs.writeFileSync(filepath, `${data}\nhola`)
-const nuevaData = `
+fs.appendFileSync(filepath, '\n\nMAS DATA')
 
-## Otro dia ##
-${getDate()}
-`
-fs.appendFileSync(filepath, nuevaData)
+const data = fs.readFileSync(filepath, 'utf-8')
+
+console.log(data)
+
+// const exists = fs.existsSync(filepath)
+
+// console.log('existe', exists)
+
+// setTimeout(() => {
+//   fs.unlinkSync(filepath)
+//   const exists = fs.existsSync(filepath)
+
+//   console.log('existe', exists)
+// }, 4 * 1000)
+
 fs.unlinkSync(filepath)
-const existe = fs.existsSync(filepath)
-if(!existe) {
-  console.log('el archivo ha sido borrado')
-}
+const exists = fs.existsSync(filepath)
 
-console.timeEnd('fs')
+console.log('existe', exists)
+
+console.log('fin')
+

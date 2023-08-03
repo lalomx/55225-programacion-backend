@@ -1,29 +1,44 @@
 function foo() {
-  let i = 0 // comentar
+  let i = 0
   if (true) {
     let i = 1
-    console.log(i) // comentar
+    // console.log(i)
   }
 
-  console.log(i)
+  // console.log(i)
 }
 
+// {
+//   // scope
+//   {
+//     // scope
+//     console.log('scope dentro de scope')
+//   }
+// }
+
+// console.log(i)
 // foo()
 
-const i = 0
+const nombre = 'lalo'
+// nombre = 'luciano'
 
-// i = 1
+console.log(nombre)
 
-const arr = [10, 20, 30]
+// objetos
+// arrays
 
-arr[0] = 11
-arr[2] = 31
+const obj = { nombre: 'leandro', edad: 15 }
+
+console.log(obj)
+
+obj.edad = 25 // mutando mi objeto
+
+console.log(obj)
+
+// obj = {} // reasignacion
+
+const arr = [0, 1, 2]
+
+arr[1] = 5
 
 console.log(arr)
-
-const user = { name: 'Adrian', edad: 20 }
-
-user.name = 'Ramiro'
-
-console.log(user)
-

@@ -1,13 +1,25 @@
-const base = 2
-const exp = 7
+const base = 5
+const exp = 2
+
+// 2 ^ 7 = 128
 
 let resultado = base ** exp
 
+// console.log(resultado)
 
-const nombres = ['Lalo', 'Facundo', 'Ramiro', 'Ana']
+// array includes
 
-if (nombres.includes('Lalo')) {
-  console.log('lalo existe')
-} else {
-  console.log('nombre no existe')
+const user = {
+  name: 'X',
+  role: 'admin'
 }
+
+const rolesPermitidos = ['admin', 'privilegiado', 'otro']
+const existe = rolesPermitidos.includes(user.role)
+
+// console.log(existe)
+
+const nums = [5, 8, 10, 46, 25]
+
+console.log(nums.includes(-5))
+

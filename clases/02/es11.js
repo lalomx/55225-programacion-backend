@@ -1,25 +1,37 @@
-const defaultValue = 0
+const record = {
+  /// propiedades
+  nombre: 'red dead 2',
+  // createdDate: 0 // 1 ene 1970 unix epoch falsey
+}
 
-const value = defaultValue || "no value"
-console.log(value)
+// if (record.createdDate) {
+//   // asdas
+// }
 
-const valueNullish = defaultValue ?? "no value"
+const defaultValue = 10
 
-console.log(valueNullish)
+function nuevo(record) {
+  const fecha = record.createdDate ?? defaultValue
+
+  console.log(fecha)
+}
+
+// nuevo(record)
 
 class Persona {
   #fullname
-  #metodoPrivado = () => console.log('privado')
+  #metodoPrivado = () => console.log('metodo privada')
+
   constructor(nombre, apellido) {
     this.nombre = nombre
     this.apellido = apellido
 
-    this.#fullname = `${nombre} ${apellido}`
-
-    getFullName = () => this.#fullname    
+    this.#fullname = `${this.nombre} ${this.apellido}`
   }
+
+  getFullname = () => this.#fullname
 }
 
-const p = new Persona('luis', 'hernandez')
+const p = new Persona('Ivan', 'Abregu')
 
-console.log(p.getFullName())
+console.log(p.getFullname())

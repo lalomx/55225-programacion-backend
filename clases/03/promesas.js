@@ -1,21 +1,52 @@
-const div = (a, b) => {
-  return new Promise((rej, res) => {
-    if (divisior == 0) {
-      rej('no se puede dividir entre 0')
-      return
-    }
+// const div = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     // console.log('se resuelve')
+//     // resolve('hello world')
+//     resolve(2)
+//   }, 2000)
+// })
 
-    res(a/b)
-  })
-}
+// // console.log(div)
 
-const res = div(1, 2)
+// // setTimeout(() => {
+// //   console.log(div)
+// // }, 4000)
 
-console.log(res)
+// div.then((data) => {
+//   console.log('paso X tiempo')
+//   console.log(data)
+// }).catch((err) => {
+//   console.log(err)
+// }).finally(() => {
+//   console.log(' al final ')
+// })
 
 
-// usar then y catch
 
-// imprimir el estado
-// usar set timeout para checar el estado pending
-// ejemplo de la base de datos en promesa
+const mult = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    // console.log('se resuelve')
+    // resolve('hello world')
+    resolve(2)
+  }, 2000)
+})
+
+console.log('operacion 1')
+console.log('operacion 2')
+console.log('operacion 2')
+
+// 0 1 1 2 3 5 8
+let resultadoFinal = 0
+mult.then((num) => {
+  const res = num * 2
+
+  return res
+}).then((num) => {
+  console.log('el numero final')
+  console.log(num)
+
+  resultadoFinal = num
+})
+
+console.log(resultadoFinal)
+

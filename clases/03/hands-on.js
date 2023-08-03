@@ -1,64 +1,95 @@
 const suma = (a, b) => {
-  return new Promise((reject, resolve) => {
+  return new Promise((res, rej) => {
     if (a == 0 || b == 0) {
-      reject('operacion innecesaria')
+      rej('operacion innecesaria')
+
       return
     }
 
     const result = a + b
     if (result < 0) {
-      reject('la calculadora solo devuelve resultados positivos')
+      rej('la calculadora solo regresa valores positivos')
+
       return
     }
 
-    resolve(result)
+    res(result)
   })
 }
 
 const resta = (a, b) => {
-  return new Promise((reject, resolve) => {
+  return new Promise((res, rej) => {
     if (a == 0 || b == 0) {
-      reject('operacion innecesaria')
+      rej('operacion innecesaria')
+
       return
     }
 
     const result = a - b
     if (result < 0) {
-      reject('la calculadora solo devuelve resultados positivos')
+      rej('la calculadora solo regresa valores positivos')
+
       return
     }
 
-    resolve(result)
+    res(result)
   })
 }
 
 const multi = (a, b) => {
-  return new Promise((reject, resolve) => {
-    if (a <= 0 || b <= 0) {
-      reject('la calculadora solo devuelve resultados positivos')
+  return new Promise((res, rej) => {
+    if (a == 0 || b == 0) {
+      rej('operacion innecesaria')
+
       return
     }
 
-    resolve(a * b)
+    const resultado = a * b
+    if(resultado < 0) {
+      rej('la calculadora solo regresa valores positivos')
+
+      return
+    }
+
+    res(resultado)
   })
 }
 
 const div = (a, b) => {
-  return new Promise((reject, resolve) => {
+  return new Promise((res, rej) => {
+    // a / b
+
     if (a == 0) {
-      reject('no se puede dividir entre 0')
+      rej('operacion innecesaria')
+
       return
     }
 
     if (b == 0) {
-      reject('operacion innecesaria')
+      rej('no se puede dividir entre 0')
       return
     }
 
-    resolve(a / b)
+    const resultado = a / b
+    if (resultado < 0){
+      rej('la calculadora solo regresa valores positivos')
+
+      return
+    }
+
+    res(resultado)
   })
 }
 
 async function main() {
+  try {
+    const resultado = await div(200, 2)
 
+    console.log(resultado)
+  } catch(e) {
+    console.log(e)
+  }
+  
 }
+
+main()

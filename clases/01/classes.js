@@ -2,50 +2,46 @@ class Vehiculo {
 
   // constructor
   constructor(matricula) {
+    // se ejecuta una vez que se instancia la clase
+    // definir propiedades
+    // console.log('se ejecuto el constructor con el argumento', matricula)
+
     this.matricula = matricula
-    this.kilometraje = 0
-    console.log('nuevo objeto')
+    this.km = 0
   }
 
-  // variables static
-  static usaGasolina = true
+  // variables estaticas
   static transmision = 'manual'
-  static servicioCada = 15000
 
   // metodos
   conducir(km) {
-    console.log(`conduciendo ${km} kilometros`)
-
-    this.kilometraje = km + this.kilometraje
+    // operaciones
+    this.km = this.km + km
   }
 
-  obtenerKilometraje() {
-    console.log(`El auto con matricula ${this.matricula} tiene: ${this.kilometraje} km recorridos`)
+  imprimeInformacion() {
+    console.log(`El vehiculo de transmicion ${Vehiculo.transmision} ha recorrido ${this.km} kilometros`)
   }
+}
 
-  obtenerInformacion() {
-    console.log(`
-      Matricula: ${this.matricula}
-      KM: ${this.kilometraje} km
-      Usa Gasolina: ${Vehiculo.usaGasolina}
-    `)
-  }
- }
+const vw = new Vehiculo('123456')
 
-const vw = new Vehiculo('ABC1234')
+// console.log(vw.matricula)
+vw.conducir(350)
 
-vw.conducir(220)
-vw.obtenerKilometraje()
+// console.log(vw.km)
 
-const tesla = new Vehiculo("ABC0001")
+const tesla = new Vehiculo('098765')
 
-tesla.conducir(500)
-tesla.obtenerKilometraje()
+tesla.conducir(400)
 
-vw.obtenerInformacion()
-tesla.obtenerInformacion()
+// console.log(tesla.km)
 
-Vehiculo.usaGasolina = false
+// console.log(Vehiculo.transmision)
 
-vw.obtenerInformacion()
-tesla.obtenerInformacion()
+// vw.imprimeInformacion()
+
+Vehiculo.transmision = 'automatica'
+
+tesla.imprimeInformacion()
+vw.imprimeInformacion()

@@ -1,19 +1,8 @@
-let modo = 'suma'
+const nombre = `           Giancarlo     `
 
-async function example() {
-  if (modo === 'suma') {
-    const { suma } = await import('./suma.js')
-    const resultado = suma(2,2)
-    console.log(resultado)
-  }
-}
+// console.log(nombre.trim().length)
 
-// example()
+// depth 1
+const arr = [1, 2, 3, [4, 5, 10, [15, [1, 2]]], [7, 8, 9], 10]
 
-const nombre = `     lalo`
-
-console.log(nombre.trim())
-
-const arr = [1, 2, 3,  [4, 5, 6], [7, 8, 9], 10]
-
-console.log(arr.flat())
+console.log(arr.flat().flat().flat().flat())
