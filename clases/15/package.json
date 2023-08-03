@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "faker": "^5.5.3",
     "nodemon": "^2.0.22"
   },
   "dependencies": {
