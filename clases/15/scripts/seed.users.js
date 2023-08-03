@@ -23,15 +23,15 @@ const usersRecords = generateUsersRecord(numberOfUsers);
 
 async function main() {
   await mongoose.connect("mongodb+srv://app2:3FF28JfLw8z5Sh1m@cluster0.go6w7.mongodb.net/ecommerce?retryWrites=true&w=majority")
-  const result = await model.insertMany(usersRecords)
+  // const result = await model.insertMany(usersRecords)
+  console.time("users")
+  const result = await model.find({ firstname: "Jonh" }).explain("executionStats")
+  console.timeEnd("users")
 
-  console.log(result)
+  console.log(result.executionStats?.executionTimeMillis)
 
   await mongoose.disconnect()
 }
 
-// main()
+main()
 
-function indexOperations() {
-  
-}
