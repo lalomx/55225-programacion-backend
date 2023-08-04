@@ -1,10 +1,30 @@
 const { Schema, model } = require('mongoose')
 
 const schema = new Schema({
-  userId: String,
-  products: { type: [String], default: [] }
+  user: { type: Schema.Types.ObjectId, ref: 'users' },
+  products: { 
+    type: [{
+      product: { type: Schema.Types.ObjectId, ref: 'products' },
+      qty: { type: Number, default: 0 }
+    }],
+    default: []
+  },
+  createdDate: { type: Number, default: Date.now() }
+})
+
+schema.pre("findOne", function () {
+  this.populate('user', 'email')
 })
 
 const cartModel = model('carts', schema)
+
+
+// {
+//   user: 1,
+//   products: [{
+//     product: 00,
+//     qty: 1
+//   }]
+// }
 
 module.exports = cartModel
