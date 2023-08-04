@@ -13,7 +13,7 @@ const schema = new Schema({
 })
 
 schema.pre("findOne", function () {
-  this.populate('user', 'email')
+  this.populate({ path: 'user', select: ['email', 'firstname', 'lastname'] })
 })
 
 const cartModel = model('carts', schema)

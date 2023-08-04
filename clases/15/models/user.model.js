@@ -7,7 +7,8 @@ const schema = new Schema({
   password: String,
   role: String,
   gender: String,
-  createdDate: { type: Number, default: Date.now() }
+  createdDate: { type: Number, default: Date.now() },
+  address: { type: Schema.Types.ObjectId, ref: 'addresses' }
 })
 
 const userModel = model('users', schema)
