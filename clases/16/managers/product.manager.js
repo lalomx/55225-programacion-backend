@@ -15,6 +15,10 @@ class ProductManager {
     return productModel.find().lean()
   }
 
+  getAllPaged(page = 1, limit = 5) {
+    return productModel.paginate({}, { limit, page, lean: true })
+  }
+
   async getById(id) {
     const products = await productModel.find({ _id: id })
 
