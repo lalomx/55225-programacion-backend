@@ -1,0 +1,1 @@
+console.log('desde la vista de admin')
