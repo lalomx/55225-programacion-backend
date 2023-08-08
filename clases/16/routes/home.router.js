@@ -10,13 +10,20 @@ function getRandomNumber(min, max) {
 
 router.get('/', async (req, res) => {
   // res.sendFile(path.join(__dirname, '../public/index.html'))
-  const products = await productManager.getAll()
+  const { page } = req.query
+  const { docs: products, ...pageInfo } = await productManager.getAllPaged(page)
 
   console.log("ID del product manager desde home router", productManager.id)
+
+  pageInfo.prevLink = pageInfo.hasPrevPage?`http://localhost:3000/?page=${pageInfo.prevPage}`:'';
+  pageInfo.nextLink = pageInfo.hasNextPage?`http://localhost:3000/?page=${pageInfo.nextPage}`:'';
+
+  console.log(pageInfo)
 
   res.render('home', {
     title: 'Home',
     products,
+    pageInfo,
     user: {
       ...req.user,
       isAdmin: req.user.role == 'admin',

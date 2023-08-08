@@ -9,7 +9,63 @@ async function main() {
   await mongoose.connect("mongodb+srv://app2:3FF28JfLw8z5Sh1m@cluster0.go6w7.mongodb.net/ecommerce?retryWrites=true&w=majority")
 
   
-  
+//   const products = await productsModel.aggregate([
+//     {
+//         $match: { platform: 'PC' }
+//     },
+//     {
+//         $group: {
+//             _id: "$title",
+//             total: { $sum: "$stock" }
+//         }
+//     }
+//   ])
+
+    // envios urgentes 5
+  const orders = await purchaseOrderModel.aggregate([
+    {
+        $sort: { estimatedDelivery: 1 }
+    },
+    { 
+        $set: {
+            totalItems: { $size: "$products" }
+        }
+    },
+    {
+        $lookup: {
+            from: "addresses",
+            localField: "postAddress",
+            foreignField: "_id",
+            as: "deliveryAddress"
+        }
+    },
+    { 
+        $set: {
+            postAddress: { $arrayElemAt: [ "$deliveryAddress", 0 ]} 
+        }
+    },
+    // {
+    //     $match: {
+    //         totalItems: 3
+    //     }
+    // },
+    {
+        $project: {
+            total: 1, totalItems: 1, estimatedDelivery: 1, postAddress: 1
+        }
+    },
+    {
+        $group: {
+            _id: "$postAddress.country",
+            orders: { $push: "$$ROOT" }
+        }
+    },
+    {
+        $limit: 100
+    }
+  ])
+
+  console.log(JSON.stringify(orders, null, 2))
 
   await mongoose.disconnect()
 }
@@ -51,4 +107,5 @@ async function generatePurchases() {
 // await p.save()
 // }
 
-main()
+
+// main()

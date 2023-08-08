@@ -11,6 +11,11 @@ class ProductManager {
     this.id = getRandomNumber(1, 10) // el id debe de ser el mismo ya que es un singleton
   }
 
+  getAllPaged(page = 1) {
+
+    return productModel.paginate({}, {limit: 5, page, lean: true})
+  }
+
   getAll() {
     return productModel.find().lean()
   }
