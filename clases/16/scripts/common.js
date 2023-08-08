@@ -5,13 +5,13 @@ function generateGames(count) {
 
     for (let i = 0; i < count; i++) {
         arr.push({
-            title: faker.random.words(4),
-            description: faker.random.words({ count: { min: 5, max: 10 } }),
-            platform: faker.random.arrayElement(['PlayStation', 'Xbox', 'Nintendo Switch', 'PC']),
+            title: faker.word.words(4),
+            description: faker.word.words({ count: { min: 5, max: 10 } }),
+            platform: faker.helpers.arrayElement(['PlayStation', 'Xbox', 'Nintendo Switch', 'PC']),
             keywords: [],
             releaseDate: faker.date.past(),
-            price: faker.random.number({ min: 20, max: 60, precision: 2 }),
-            stock: faker.random.number({ min: 45, max: 1500 }),
+            price: faker.number.int({ min: 45, max: 1500 })({ min: 20, max: 60, precision: 2 }),
+            stock: faker.number.int({ min: 45, max: 1500 })({ min: 45, max: 1500 }),
             developer: faker.company.companyName(),
           })
     }
@@ -38,11 +38,11 @@ function generateUsersRecord(count) {
     const users = [];
   
     for (let i = 0; i < count; i++) {
-      const firstname = faker.name.firstName();
-      const lastname = faker.name.lastName();
-      const email = faker.internet.email(firstname, lastname);
-      const gender = faker.random.arrayElement(['Male', 'Female']);
-      const role = faker.random.arrayElement(['Admin', 'Customer']);
+      const firstname = faker.person.firstName();
+      const lastname = faker.person.lastName();
+      const email = faker.internet.email({ firstName: firstname, lastName: lastname });
+      const gender = faker.helpers.arrayElement(['Male', 'Female']);
+      const role = faker.helpers.arrayElement(['Admin', 'Customer']);
   
       users.push({ firstname, lastname, email, gender, role });
     }
