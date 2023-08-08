@@ -10,9 +10,9 @@ function generateGames(count) {
             platform: faker.helpers.arrayElement(['PlayStation', 'Xbox', 'Nintendo Switch', 'PC']),
             keywords: [],
             releaseDate: faker.date.past(),
-            price: faker.number.int({ min: 45, max: 1500 })({ min: 20, max: 60, precision: 2 }),
-            stock: faker.number.int({ min: 45, max: 1500 })({ min: 45, max: 1500 }),
-            developer: faker.company.companyName(),
+            price: faker.number.int({ min: 20, max: 60, precision: 2 }),
+            stock: faker.number.int({ min: 45, max: 1500 }),
+            developer: faker.company.name(),
           })
     }
 
