@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/css/uikit.min.css" type="text/css">
+  </head>
+  <body>
+    <div class="uk-container uk-width-1-1 uk-padding-remove uk-margin-remove">
+      <nav id="navbar" class="uk-navbar-container" uk-navbar>
+        <div class="uk-navbar-left">
+          <ul class="uk-navbar-nav">
+            <li >
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a class="uk-active" href="/carrito">Carrito<span id="cart-badge" class="uk-label">1</span></a>
+            </li>
+            <li>
+              <a>Cuenta</a>
+              <div class="uk-navbar-dropdown">
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                  <li>
+                    <a href="#">Perfil</a>
+                  </li>
+                  <li>
+                    <a href="/admin">Admin</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="uk-width-1-1 uk-margin-remove uk-align-center uk-text-break uk-padding">
+        <h2>Videojuegos en el carrito</h2>
+        
+        <div class="uk-flex uk-flex-between align-cart">
+          <div>
+            <h5 class="uk-margin-remove">Total: USD $149</h5>
+          </div>
+          <div>
+            <a href="/pedido">
+              <button class="uk-margin-remove uk-button uk-button-secondary uk-button-small uk-margin-top">Continuar</button>
+            </a>
+          </div>
+        </div>
+        <div id="productsInCart" class="uk-margin-top uk-child-width-1-4@m" uk-grid>
+          <div id="{{id}}">
+            <div class="uk-card uk-card-default">
+              <div class="uk-card-body">
+                <h3 class="uk-card-title">Red Dead Redemption 2</h3>
+                <h5>MXN $149</h5>
+                <span class="uk-badge">Xbox</span>
+                <br>
+                <button class="uk-button uk-button-secondary uk-button-small uk-margin-top">Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/js/uikit-icons.min.js"></script>
+  </body>
+</html>
