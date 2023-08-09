@@ -83,6 +83,11 @@ async function main() {
 
   console.log(JSON.stringify(ordersByCountry, null, 2))
 
+
+  // productsModel.find()
+
+  // http://localhost:3000/api/products?page=1&limit=10&query={ title: 'A' }&sort=desc
+
   await mongoose.disconnect()
 }
 
