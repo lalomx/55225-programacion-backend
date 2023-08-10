@@ -28,7 +28,7 @@
             
             {{#if user}}
               <li>
-                <a>Cuenta</a>
+                <a>Bienvenido, {{user.name}}!</a>
                 <div class="uk-navbar-dropdown">
                   <ul class="uk-nav uk-navbar-dropdown-nav">
                     <li>
@@ -39,6 +39,9 @@
                         <a href="/admin/product/add">Admin</a>
                       </li>
                     {{/if}}
+                    <li>
+                      <a href="/logout">Logout</a>
+                    </li>
                   </ul>
                 </div>
               </li>
