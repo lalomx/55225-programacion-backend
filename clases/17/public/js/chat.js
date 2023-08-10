@@ -76,9 +76,13 @@ socket.on('chat-messages', (messagesList) => {
 // })
 
 // sacar user de la cookie
+const cookies = parseCookies()
+// cookies[' apellido']
+// cookies.apellido
 
-if (username) {
+if (cookies.user) {
   // username = value
+  username = cookies.user
   socket.emit('user', { user: username, action: true })
   
   // aqui voy a renderizar los mensajes actuales del server
@@ -118,5 +122,17 @@ if (username) {
     target.value = ""
     appendMessageElement(username, fecha.toLocaleTimeString('en-US'), value)
   })
-  
+}
+
+function parseCookies() {
+  // user=lalo; apellido=ramos
+  return document.cookie
+    .split(';')
+    .reduce((obj, cookie) => {
+      const keyValue = cookie.split('=')
+      return {
+        ...obj,
+        [keyValue[0].trim()]: keyValue[1]
+      }
+    }, {})
 }
