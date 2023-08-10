@@ -7,6 +7,8 @@
   const handlebars = require('express-handlebars')
   const { Server } = require("socket.io");
   const mongoose = require('mongoose')
+  const cookieParser = require('cookie-parser')
+  const session = require('express-session')
 
   const Routes = require('./routes/index.js')
   const socketManager = require('./websocket')
@@ -28,19 +30,35 @@
     app.use(express.urlencoded({ extended: true })) // para poder parsear el body y los query params
     app.use(express.json())
     app.use('/static', express.static(path.join(__dirname + '/public')))
+    app.use(cookieParser('esunsecreto'))
+    app.use(session({
+      secret: 'esunsecreto',
+      resave: true,
+      saveUninitialized: true
+    }))
 
     /// middleware global
-    // app.use((req, res, next) => {
-      
-    //   // simulando un usuario autenticado
-    //   req.user = {
-    //     name: "Jonh",
-    //     role: "admin"
-    //   }
+    app.use((req, res, next) => {
 
-    //   next()
-    // })
-    // cookie
+      const { user } = req.cookies
+      const { token } = req.signedCookies
+
+      console.log('chequeando cookies')
+
+      //primero imprimimos cookies
+      console.log(user, token, req.session?.user)
+
+      // if (user) {
+      if (req.session?.user) {
+        req.user = {
+          name: req.session.user.name,
+          role: "admin"
+        }
+      }      
+
+      next()
+    })
+    
     // passport
     // template engines
     // entre otros

@@ -2,8 +2,6 @@
 const messagesEl = document.querySelector('#messages')
 const inputElement = document.querySelector('.inputBox input')
 
-console.log(new Date())
-
 messagesEl.innerHTML = ""
 // messagesEl.appendChild(NUEVO ELEMENTO) 
 
@@ -77,8 +75,10 @@ socket.on('chat-messages', (messagesList) => {
 
 // sacar user de la cookie
 
-if (username) {
-  // username = value
+const cookies = parseCookies()
+console.log(cookies)
+if (cookies.user) {
+  username = cookies.user
   socket.emit('user', { user: username, action: true })
   
   // aqui voy a renderizar los mensajes actuales del server
@@ -119,4 +119,17 @@ if (username) {
     appendMessageElement(username, fecha.toLocaleTimeString('en-US'), value)
   })
   
+}
+
+
+function parseCookies() {
+  const cookies = document.cookie.split(';')
+  return cookies.reduce((obj, cookie) => {
+    const [name, value] = cookie.split('=')
+    return { 
+      ...obj,
+      [name.trim()]: value
+    }
+  }, {})
+  return {}
 }
