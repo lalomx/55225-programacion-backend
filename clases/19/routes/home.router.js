@@ -1,6 +1,6 @@
 const { Router } = require('express')
-const path = require('path')
 const productManager = require('../managers/product.manager')
+const userManager = require('../managers/user.manager')
 const isAuth = require('../middlewares/auth.middleware')
 
 const router = Router()
@@ -65,21 +65,60 @@ router.get('/carrito', (req, res) => {
 })
 
 router.get('/signup', (_, res) => res.render('signup'))
+router.post('/signup', async (req, res) => {
+  const user = req.body
+
+  console.log(user)
+
+  // validar user
+
+  try {
+    const newUser = await userManager.create(user)
+    req.session.user = {
+      name: user.firstname,
+      id: newUser._id,
+      ...user
+    }
+    res.redirect('/')
+  } catch (e) {
+    const errors = {}
+    res.render('signup', { errors })
+  }
+})
+
+
 router.get('/login', (_, res) => res.render('login'))
-router.post('/login', (req, res) => {
-  const { user } = req.body
+router.post('/login', async (req, res) => {
+  const { email } = req.body
 
   // setear la cookie de usuario
 
   // guardo la session con la informacion del usuario
-  req.session.user = {
-    name: user
-  }
+  try {
+    const user = await userManager.getByEmail(email)
+    
+    if (!user) {
+      return res.render('login', { errors: 'usuario no existe o credenciales invalidas'})
+    }
 
-  res
-    // .cookie('user', user)
-    // .cookie('token', 'SOYUNTOKEN', { signed: true })
-    .redirect('/')
+    console.log(user)
+
+    req.session.user = {
+      name: user.firstname,
+      id: user._id,
+      ...user
+    }
+
+    req.session.save(function(err) {
+      // session saved
+      res.redirect('/')
+    })
+
+    
+  } catch (e) {
+    console.log(e)
+    res.render('login', { errors: 'usuario no existe o credenciales invalidas'})
+  }
 })
 router.get('/logout', isAuth, (req, res) => {
   const { user } = req.cookies
