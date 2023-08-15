@@ -1,6 +1,7 @@
 const { Router } = require('express')
 const path = require('path')
 const productManager = require('../managers/product.manager')
+const userManager = require('../managers/user.manager')
 const isAuth = require('../middlewares/auth.middleware')
 
 const router = Router()
@@ -35,7 +36,7 @@ router.get('/', async (req, res) => {
   })
 })
 
-router.get('/chat', (req, res) => {
+router.get('/chat', isAuth, (req, res) => {
   res.render('chat')
 })
 
@@ -64,22 +65,84 @@ router.get('/carrito', (req, res) => {
   })
 })
 
+router.get('/profile', isAuth, (req, res) => {
+  res.render('profile', {
+    ...req.session.user
+  })
+})
 router.get('/signup', (_, res) => res.render('signup'))
-router.get('/login', (_, res) => res.render('login'))
-router.post('/login', (req, res) => {
-  const { user } = req.body
+router.post('/signup', async (req, res) => {
+  const user = req.body
+  
+  console.log(user)
 
-  // setear la cookie de usuario
+  const existing = await userManager.getByEmail(user.email)
 
-  // guardo la session con la informacion del usuario
-  req.session.user = {
-    name: user
+  if (existing) {
+    return res.render('signup', {
+      error: 'El email ya existe'
+    })
   }
 
-  res
-    // .cookie('user', user)
-    // .cookie('token', 'SOYUNTOKEN', { signed: true })
-    .redirect('/')
+  // crear al usuario
+  try {
+    const newUser = await userManager.create(user)
+
+    req.session.user = {
+      name: newUser.firstname,
+      id: newUser._id,
+      ...newUser._doc
+    }
+
+    console.log(req.session)
+
+    req.session.save((err) => {
+      res.redirect('/')
+    })
+
+  } catch(e) {
+    return res.render('signup', {
+      error: 'Ocurrio un error. Intentalo mas tarde'
+    })
+  }
+
+  
+
+})
+
+router.get('/login', (_, res) => res.render('login'))
+router.post('/login', async (req, res) => {
+  const { email } = req.body
+
+  try {
+
+    const user = await userManager.getByEmail(email)
+
+    if (!user) {
+      return res.render('login', { error: 'El usuario no existe' })
+    }
+
+    req.session.user = {
+      name: user.firstname,
+      id: user._id,
+
+      // role: 'Admin'
+      ...user
+    }
+
+    req.session.save((err) => {
+      if(!err) {
+        res.redirect('/')
+      }
+    })
+  } catch(e) {
+    res.render('login', { error: 'Ha ocurrido un error' })
+  }
+
+  // guardo la session con la informacion del usuario
+
+
+  
 })
 router.get('/logout', isAuth, (req, res) => {
   const { user } = req.cookies

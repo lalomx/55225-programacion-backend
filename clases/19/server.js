@@ -9,6 +9,8 @@
   const mongoose = require('mongoose')
   const cookieParser = require('cookie-parser')
   const session = require('express-session')
+  // const fileStore = require('session-file-store')
+  const MongoStore = require('connect-mongo')
 
   const Routes = require('./routes/index.js')
   const socketManager = require('./websocket')
@@ -22,6 +24,7 @@
     const app = express() // app express
     const server = http.createServer(app) // server http montado con express
     const io = new Server(server) // web socket montado en el http
+    // const FileStore = fileStore(session)
 
     app.engine('handlebars', handlebars.engine()) // registramos handlebars como motor de plantillas
     app.set('views', path.join(__dirname, '/views')) // el setting 'views' = directorio de vistas
@@ -31,11 +34,17 @@
     app.use(express.json())
     app.use('/static', express.static(path.join(__dirname + '/public')))
     app.use(cookieParser('esunsecreto'))
+    
     app.use(session({
       secret: 'esunsecreto',
       resave: true,
       saveUninitialized: true,
       // store: ''
+      // store: new FileStore({ path: './sessions', ttl: 100, retries: 0 }),
+      store: MongoStore.create({
+        mongoUrl: 'mongodb+srv://app2:3FF28JfLw8z5Sh1m@cluster0.go6w7.mongodb.net/ecommerce?retryWrites=true&w=majority',
+        ttl: 60 * 60
+      })
     }))
     
 
