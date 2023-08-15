@@ -4,7 +4,7 @@
     <div class="uk-margin">
       <div class="uk-inline">
         <span class="uk-form-icon" uk-icon="icon: user"></span>
-        <input name="user" class="uk-input" type="text" aria-label="Not clickable icon">
+        <input name="email" class="uk-input" type="text" aria-label="Not clickable icon">
       </div>
     </div>
 
@@ -20,6 +20,15 @@
         <span>No tienes cuenta? <a href="/signup">Registrate!</a></span>
       </div>
     </div>
+
+    {{#if errors}}
+      <div class="uk-margin">
+        <div class="uk-inline">
+          <span class="uk-form-danger">{{errors}}</span>
+        </div>
+      </div>
+    {{/if}}
+    
 
     <button class="uk-button uk-button-default">Entrar</button>
   </form>
