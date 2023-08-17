@@ -1,0 +1,41 @@
+<div class="uk-padding-large uk-child-width-1-1" uk-grid>
+  <h3>Inicia sesion</h3>
+  <form action="" method="post">
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <span class="uk-form-icon" uk-icon="icon: user"></span>
+        <input name="email" class="uk-input" type="text" aria-label="Not clickable icon">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+        <input name="password" class="uk-input" type="password" aria-label="Not clickable icon">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <span>No tienes cuenta? <a href="/signup">Registrate!</a></span>
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <span>No recuerdas tu contraseña? <a href="/resetpassword">Resetea tu password!</a></span>
+      </div>
+    </div>
+
+    {{#if error}}
+      <div class="uk-margin">
+        <div class="uk-inline">
+          <span class="uk-form-danger">{{error}}</span>
+        </div>
+      </div>
+    {{/if}}
+    
+
+    <button class="uk-button uk-button-default">Entrar</button>
+  </form>
+</div>
