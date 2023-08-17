@@ -1,12 +1,14 @@
 const { Router } = require('express')
-
+const path = require('path')
 const productManager = require('../managers/product.manager')
 const userManager = require('../managers/user.manager')
 const isAuth = require('../middlewares/auth.middleware')
-const { hashPassword, isValidPassword } = require('../utils')
 
 const router = Router()
 
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 router.get('/', async (req, res) => {
   // res.sendFile(path.join(__dirname, '../public/index.html'))
@@ -41,6 +43,7 @@ router.get('/chat', isAuth, (req, res) => {
 router.get('/realtimeproducts', async (req, res) => {
   // res.sendFile(path.join(__dirname, '../public/index.html'))
   const products = await productManager.getAll()
+  // const randomId = getRandomNumber(0, products.length - 1)
 
   res.render('realTimeProducts', {
     title: 'Real Time',
@@ -83,10 +86,7 @@ router.post('/signup', async (req, res) => {
 
   // crear al usuario
   try {
-    const newUser = await userManager.create({
-      ...user,
-      password: hashPassword(user.password),
-    })
+    const newUser = await userManager.create(user)
 
     req.session.user = {
       name: newUser.firstname,
@@ -112,25 +112,20 @@ router.post('/signup', async (req, res) => {
 
 router.get('/login', (_, res) => res.render('login'))
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body
+  const { email } = req.body
 
   try {
 
     const user = await userManager.getByEmail(email)
 
-    console.log(user.password, password)
-
     if (!user) {
       return res.render('login', { error: 'El usuario no existe' })
-    }
-
-    if (!user.password || !password || !isValidPassword(password, user.password)) {
-      return res.render('login', { error: 'Contraseña invalida' })
     }
 
     req.session.user = {
       name: user.firstname,
       id: user._id,
+
       // role: 'Admin'
       ...user
     }
@@ -141,11 +136,13 @@ router.post('/login', async (req, res) => {
       }
     })
   } catch(e) {
-    console.log(e)
     res.render('login', { error: 'Ha ocurrido un error' })
   }
 
   // guardo la session con la informacion del usuario
+
+
+  
 })
 router.get('/logout', isAuth, (req, res) => {
   const { user } = req.cookies
@@ -170,36 +167,4 @@ router.get('/logout', isAuth, (req, res) => {
   // })
 })
 
-router.get('/resetpassword', (_, res) => res.render('resetpassword'))
-router.post('/resetpassword', async (req, res) => {
-
-  const { email, password1, password2 } = req.body
-
-  const user = await userManager.getByEmail(email)
-
-  if (!user) {
-    return res.render('resetpassword', { error: 'El usuario no existe' })
-  }
-
-  if(password1 !== password2) {
-    return res.render('resetpassword', { error: 'Las contraseñas no coinciden' })
-  }
-
-  try {
-    
-    await userManager.save(user._id, {
-      ...user,
-      password: hashPassword(password1)
-    })
-
-    res.redirect('/login')
-
-  } catch(e) {
-    console.log(e)
-    return res.render('resetpassword', { error: 'Ha ocurrido un error' })
-  }
-})
-
 module.exports = router
-
-// a cipher is a two-way operation, whereas hashing is a one-way operation
