@@ -7,7 +7,7 @@ class UserManager {
   }
 
   getById(id) {
-    return userModel.find({ _id: id }).lean()
+    return userModel.findOne({ _id: id }).lean()
   }
 
   getByEmail(email) {
