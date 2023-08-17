@@ -118,11 +118,45 @@ const logout = (req, res) => {
   // })
 }
 
+const resetpassword = async (req, res) => {
+  const { email, password1, password2 } = req.body
+
+  console.log(email)
+
+  const user = await userManager.getByEmail(email)
+
+  console.log(user)
+
+  if (!user) {
+    return res.render('resetpassword', { error: 'el usuario no existe' })
+  }
+
+  if (password1 !== password2) {
+    return res.render('resetpassword', { error: 'las contraseñas no coinciden' })
+  }
+
+  try {
+    await userManager.save(user._id, {
+      ...user,
+      password: hashPassword(password1)
+    })
+
+
+    res.redirect('/login')
+
+  } catch (e) {
+    console.log(e)
+    return res.render('resetpassword', { error: 'Ha ocurrido un error' })
+  }
+}
+
 // rutas de login
 router.get('/signup', (_, res) => res.render('signup'))
 router.get('/login', (_, res) => res.render('login'))
+router.get('/resetpassword', (_, res) => res.render('resetpassword'))
 router.post('/signup', signup)
 router.post('/login', login)
+router.post('/resetpassword', resetpassword)
 router.get('/logout', isAuth, logout)
 
 module.exports = router
