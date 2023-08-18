@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const passport = require('passport')
 
 const userManager = require('../managers/user.manager')
 const isAuth = require('../middlewares/auth.middleware')
@@ -154,9 +155,27 @@ const resetpassword = async (req, res) => {
 router.get('/signup', (_, res) => res.render('signup'))
 router.get('/login', (_, res) => res.render('login'))
 router.get('/resetpassword', (_, res) => res.render('resetpassword'))
-router.post('/signup', signup)
-router.post('/login', login)
+
+router.post('/signup', passport.authenticate('local-signup', {
+  successRedirect: '/profile',
+  failureRedirect: '/signup'
+}))
+
+router.post('/login', passport.authenticate('local-login', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+}))
+
 router.post('/resetpassword', resetpassword)
-router.get('/logout', isAuth, logout)
+router.get('/logout', isAuth, (req, res) => {
+  const { firstname, lastname } = req.user
+  req.logOut((err) => {
+    if(!err) {
+      res.render('logout', {
+        name: `${firstname} ${lastname}`
+      })
+    }
+  })
+})
 
 module.exports = router

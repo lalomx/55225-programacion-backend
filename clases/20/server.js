@@ -11,9 +11,11 @@
   const session = require('express-session')
   // const fileStore = require('session-file-store')
   const MongoStore = require('connect-mongo')
+  const passport = require('passport')
 
   const Routes = require('./routes/index.js')
   const socketManager = require('./websocket')
+  const initPassportLocal = require('./config/passport.local.config.js')
 
   try {
     // conectar la base de datos antes de levantar el server
@@ -46,6 +48,12 @@
         ttl: 60 * 60
       })
     }))
+
+    // registro de los middlewares de passport
+    initPassportLocal()
+    
+    app.use(passport.initialize())
+    app.use(passport.session())
     
 
     /// middleware global
@@ -54,7 +62,8 @@
       // console.log(req.cookies) // leer las cookies
       // console.log(req.signedCookies)
 
-      console.log(req.session)
+      console.log(req.session, req.user)
+      next()
 
       // const { user } = req.cookies
       
@@ -64,15 +73,10 @@
       //     name
       //   }
       // }
-      if (req.session?.user) {
-        req.user = {
-          name: req.session.user.name,
-          role: "admin"
-        }
-      }
+      })
 
-      next()
-    })
+    //   next()
+    // })
     // cookie
     // passport
     // template engines
