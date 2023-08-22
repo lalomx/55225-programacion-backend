@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/css/uikit.min.css" type="text/css">
+    {{#if style}} 
+      <link rel="stylesheet" href="/static/css/{{style}}.css" type="text/css">
+    {{/if}}
+  </head>
+  <body>
+    <div class="uk-container uk-width-1-1 uk-padding-remove uk-margin-remove">
+      <nav id="navbar" class="uk-navbar-container" uk-navbar>
+        <div class="uk-navbar-left">
+          <ul class="uk-navbar-nav">
+            <li class="uk-active">
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/carrito">Carrito<span id="cart-badge" class="uk-label">0</span></a>
+            </li>
+            {{#if user}}
+              <li>
+                <a href="/chat">Chat</a>
+              </li>
+            {{/if}}
+            
+            {{#if user}}
+              <li>
+                <a>Bienvenido, {{user.firstname}}!</a>
+                <div class="uk-navbar-dropdown">
+                  <ul class="uk-nav uk-navbar-dropdown-nav">
+                    <li>
+                      <a href="/profile">Perfil</a>
+                    </li>
+                    {{#if user.isAdmin}}
+                      <li>
+                        <a href="/admin/product/add">Admin</a>
+                      </li>
+                    {{/if}}
+                    <li>
+                      <a href="/logout">Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            {{else}}
+              <li>
+                <a href="/login">Inicia Sesion</a>
+              </li>
+            {{/if}}
+          </ul>
+        </div>
+      </nav>
+      <div class="uk-width-1-1 uk-margin-remove uk-align-center uk-text-break uk-padding">
+        <h2 id="page-title">{{ title }}</h2>
+        {{!-- <div class="uk-width-1-1 uk-align-center" uk-grid>
+          <button class="uk-button" onclick="refreshPromo()">Refresh</button>
+          <div id="rebaja-banner" class="uk-card uk-card-default uk-width-1-1">
+            <div class="uk-card-body uk-flex">
+              <span id="title"></span>
+              <span class="uk-badge" id="sale"></span>
+            </div>
+          </div>
+        </div> --}}
+        {{{body}}}
+      </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/static/js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/js/uikit-icons.min.js"></script>
+  </body>
+</html>
