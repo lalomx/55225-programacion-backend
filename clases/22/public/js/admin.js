@@ -16,7 +16,13 @@ const appendOrderElement = (order) => {
     </div>`
     
     ordersEl.appendChild(div)
-  }
+}
+
+// hacerfetch login
+// llamar post login y guardar en localStorage.setItem()
+
+//guardar cookie httpOnly
+
 
 fetch('/api/orders', {
     method: 'GET'
@@ -27,4 +33,7 @@ fetch('/api/orders', {
     for (const order of orders) {
         appendOrderElement(order)
     }
+})
+.catch(e => {
+    ordersEl.innerHTML = 'Error en la consulta'
 })
