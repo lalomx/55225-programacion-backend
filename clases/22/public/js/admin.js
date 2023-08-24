@@ -23,17 +23,33 @@ const appendOrderElement = (order) => {
 
 //guardar cookie httpOnly
 
-
-fetch('/api/orders', {
-    method: 'GET'
+fetch('/api/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({
+        email: 'lalo0892@gmail.com',
+        password: '12345'
+    })
 })
 .then(r => r.json())
-.then(orders => {
-    console.log(orders)
-    for (const order of orders) {
-        appendOrderElement(order)
-    }
+.then(res => {
+    console.log(res)
+    // fetch('/api/orders', {
+    //     method: 'GET'
+    // })
+    // .then(r => r.json())
+    // .then(orders => {
+    //     console.log(orders)
+    //     for (const order of orders) {
+    //         appendOrderElement(order)
+    //     }
+    // })
+    // .catch(e => {
+    //     ordersEl.innerHTML = 'Error en la consulta'
+    // })
 })
 .catch(e => {
     ordersEl.innerHTML = 'Error en la consulta'
 })
+
+
+

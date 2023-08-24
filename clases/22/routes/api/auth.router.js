@@ -52,7 +52,10 @@ router.post('/login', async (req, res) => {
 
         const token =  generateToken(user)
 
-        return res.send({
+        return res.cookie('jwtCookie', token, {
+            maxAge: 60 * 60 * 1000,
+            httpOnly: true
+        }).send({
             status: 'success',
             message: token
         })
