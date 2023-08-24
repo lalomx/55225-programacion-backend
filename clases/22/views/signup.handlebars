@@ -1,0 +1,66 @@
+<div class="uk-padding-large uk-child-width-1-1" uk-grid>
+  <h3>Inicia sesion</h3>
+  <form action="" method="post">
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <input class="uk-input" name="firstname" type="text" placeholder="Nombre">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <input name="lastname" class="uk-input" type="text" placeholder="Apellido">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <input name="email" class="uk-input" type="text" placeholder="Email">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <input name="age" class="uk-input" type="text" placeholder="Edad">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <select name="gender" class="uk-select" aria-label="Select">
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <input name="password" class="uk-input" type="password" placeholder="Contraseña">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <input name="password2" class="uk-input" type="password" placeholder="Confirma Contraseña">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <span>Ya tienes cuenta? <a href="/login">Inicia sesion!</a></span>
+      </div>
+    </div>
+    
+    {{#if error}}
+      <div class="uk-margin">
+        <div class="uk-inline">
+          <span class="uk-form-danger">{{error}}</span>
+        </div>
+      </div>
+    {{/if}}
+
+    <button class="uk-button uk-button-default">Registrarte</button>
+  </form>
+</div>
