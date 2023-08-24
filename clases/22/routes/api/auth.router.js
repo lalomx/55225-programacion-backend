@@ -36,6 +36,7 @@ router.get('/github/callback',
 // para obtener un token que usaremos en las demas llamadas al api
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
+    console.log(email, password)
 
     try {
         const user = await userManager.getByEmail(email)
@@ -44,7 +45,8 @@ router.post('/login', async (req, res) => {
 
 
         if (!user || !isValidPassword(password, user?.password)) {
-            return res.send({
+            console.log('no coincide password')
+            return res.status(401).send({
                 status: 'failure',
                 error: 'Failed login'
             })
@@ -52,18 +54,28 @@ router.post('/login', async (req, res) => {
 
         const token =  generateToken(user)
 
-        return res.send({
+        return res.cookie('jwtToken', token, {
+            maxAge: 60 * 60 * 1000,
+            httpOnly: true
+        }).send({
             status: 'success',
             message: token
         })
 
     } catch (error) {
         console.log(error)
-        res.send({
+        res.status(500).send({
             status: 'failure',
             error
         })
     }
+})
+
+// /api/auth/user
+router.get('/user', passport.authenticate('jwt', { session: false }), (req, res) => {
+    console.log(req.user)
+
+    res.sendStatus(200)
 })
 
 module.exports = router

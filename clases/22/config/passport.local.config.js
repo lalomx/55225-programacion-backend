@@ -3,6 +3,7 @@ const passport = require('passport')
 const local = require('passport-local')
 // importamos nuestra estrategia
 const github = require('./passport.github')
+const jwt = require('./passport.jwt.config')
 
 const userManager = require('../managers/user.manager')
 const { hashPassword, isValidPassword } = require('../utils/password.utils')
@@ -75,6 +76,10 @@ const init = () => {
 
   // registramos nuestra estrategia en passport
   passport.use('github', github)
+
+  /// estrategia de jwt
+  passport.use('jwt', jwt)
+
   passport.serializeUser((user, done) => {
     console.log(user)
     done(null, user._id)

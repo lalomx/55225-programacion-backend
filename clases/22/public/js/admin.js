@@ -16,15 +16,36 @@ const appendOrderElement = (order) => {
     </div>`
     
     ordersEl.appendChild(div)
-  }
+}
 
-fetch('/api/orders', {
-    method: 'GET'
-})
-.then(r => r.json())
-.then(orders => {
-    console.log(orders)
-    for (const order of orders) {
-        appendOrderElement(order)
+fetch('/api/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({
+        email: "lalo0892@gmail.com",
+        password: "12345"
+    }),
+    headers: {
+        "content-type": "application/json"
     }
 })
+.then(r => r.json())
+.then(({ message }) => {
+    // localStorage.setItem('token', message)
+    console.log('success')
+    console.log(document.cookie)
+})
+.catch(err => console.log(err))
+
+// fetch('/api/orders', {
+//     method: 'GET',
+//     headers: {
+//         Authorization: `Bearer ${localStorage.getItem('token')}`
+//     }
+// })
+// .then(r => r.json())
+// .then(orders => {
+//     console.log(orders)
+//     for (const order of orders) {
+//         appendOrderElement(order)
+//     }
+// })
