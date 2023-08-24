@@ -34,12 +34,20 @@
     app.use(session({
       secret: 'esunsecreto',
       resave: true,
+<<<<<<< HEAD
       saveUninitialized: true
     }))
+=======
+      saveUninitialized: true,
+      // store: ''
+    }))
+    
+>>>>>>> main
 
     /// middleware global
     app.use((req, res, next) => {
 
+<<<<<<< HEAD
       const { user } = req.cookies
       const { token } = req.signedCookies
 
@@ -49,16 +57,39 @@
       console.log(user, token, req.session?.user)
 
       // if (user) {
+=======
+      // console.log(req.cookies) // leer las cookies
+      // console.log(req.signedCookies)
+
+      console.log(req.session)
+
+      // const { user } = req.cookies
+      
+      // simulando un usuario autenticado
+      // {
+      //   user: {
+      //     name
+      //   }
+      // }
+>>>>>>> main
       if (req.session?.user) {
         req.user = {
           name: req.session.user.name,
           role: "admin"
         }
+<<<<<<< HEAD
       }      
 
       next()
     })
     
+=======
+      }
+
+      next()
+    })
+    // cookie
+>>>>>>> main
     // passport
     // template engines
     // entre otros

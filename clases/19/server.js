@@ -9,7 +9,11 @@
   const mongoose = require('mongoose')
   const cookieParser = require('cookie-parser')
   const session = require('express-session')
+<<<<<<< HEAD
   // const FileStore = require('session-file-store')
+=======
+  // const fileStore = require('session-file-store')
+>>>>>>> main
   const MongoStore = require('connect-mongo')
 
   const Routes = require('./routes/index.js')
@@ -24,7 +28,11 @@
     const app = express() // app express
     const server = http.createServer(app) // server http montado con express
     const io = new Server(server) // web socket montado en el http
+<<<<<<< HEAD
     // const fileStore = FileStore(session)
+=======
+    // const FileStore = fileStore(session)
+>>>>>>> main
 
     app.engine('handlebars', handlebars.engine()) // registramos handlebars como motor de plantillas
     app.set('views', path.join(__dirname, '/views')) // el setting 'views' = directorio de vistas
@@ -34,15 +42,27 @@
     app.use(express.json())
     app.use('/static', express.static(path.join(__dirname + '/public')))
     app.use(cookieParser('esunsecreto'))
+<<<<<<< HEAD
+=======
+    
+>>>>>>> main
     app.use(session({
       secret: 'esunsecreto',
       resave: true,
       saveUninitialized: true,
+<<<<<<< HEAD
       // store: new fileStore({ path: './sessions', ttl: 100, retries: 0 })
       store: MongoStore.create({
         mongoUrl: 'mongodb+srv://app2:3FF28JfLw8z5Sh1m@cluster0.go6w7.mongodb.net/ecommerce?retryWrites=true&w=majority',
         // mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true }
         ttl: 15
+=======
+      // store: ''
+      // store: new FileStore({ path: './sessions', ttl: 100, retries: 0 }),
+      store: MongoStore.create({
+        mongoUrl: 'mongodb+srv://app2:3FF28JfLw8z5Sh1m@cluster0.go6w7.mongodb.net/ecommerce?retryWrites=true&w=majority',
+        ttl: 60 * 60
+>>>>>>> main
       })
     }))
     
@@ -65,7 +85,11 @@
       // }
       if (req.session?.user) {
         req.user = {
+<<<<<<< HEAD
           ...req.session.user,
+=======
+          name: req.session.user.name,
+>>>>>>> main
           role: "admin"
         }
       }

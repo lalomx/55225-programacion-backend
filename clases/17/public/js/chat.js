@@ -2,6 +2,11 @@
 const messagesEl = document.querySelector('#messages')
 const inputElement = document.querySelector('.inputBox input')
 
+<<<<<<< HEAD
+=======
+console.log(new Date())
+
+>>>>>>> main
 messagesEl.innerHTML = ""
 // messagesEl.appendChild(NUEVO ELEMENTO) 
 
@@ -74,10 +79,19 @@ socket.on('chat-messages', (messagesList) => {
 // })
 
 // sacar user de la cookie
+<<<<<<< HEAD
 
 const cookies = parseCookies()
 console.log(cookies)
 if (cookies.user) {
+=======
+const cookies = parseCookies()
+// cookies[' apellido']
+// cookies.apellido
+
+if (cookies.user) {
+  // username = value
+>>>>>>> main
   username = cookies.user
   socket.emit('user', { user: username, action: true })
   
@@ -118,6 +132,7 @@ if (cookies.user) {
     target.value = ""
     appendMessageElement(username, fecha.toLocaleTimeString('en-US'), value)
   })
+<<<<<<< HEAD
   
 }
 
@@ -133,3 +148,19 @@ function parseCookies() {
   }, {})
   return {}
 }
+=======
+}
+
+function parseCookies() {
+  // user=lalo; apellido=ramos
+  return document.cookie
+    .split(';')
+    .reduce((obj, cookie) => {
+      const keyValue = cookie.split('=')
+      return {
+        ...obj,
+        [keyValue[0].trim()]: keyValue[1]
+      }
+    }, {})
+}
+>>>>>>> main

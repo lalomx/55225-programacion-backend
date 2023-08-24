@@ -14,12 +14,12 @@ const auth = async (accessToken, refreshToken, profile, done) => {
 
     try {
         // en el argumento profile, viene toda la informacion que sacamos de github
-        // console.log(profile)
+        console.log(profile)
 
         // si el email es null es porque ell usuario debe de tener su email privado
         const { _json: { name, email } } = profile
 
-        // console.log(name, email)
+        console.log(name, email)
 
         if (!email) {
             console.log('el usuario no tiene su email publico')

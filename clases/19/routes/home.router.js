@@ -1,4 +1,8 @@
 const { Router } = require('express')
+<<<<<<< HEAD
+=======
+const path = require('path')
+>>>>>>> main
 const productManager = require('../managers/product.manager')
 const userManager = require('../managers/user.manager')
 const isAuth = require('../middlewares/auth.middleware')
@@ -35,7 +39,11 @@ router.get('/', async (req, res) => {
   })
 })
 
+<<<<<<< HEAD
 router.get('/chat', (req, res) => {
+=======
+router.get('/chat', isAuth, (req, res) => {
+>>>>>>> main
   res.render('chat')
 })
 
@@ -64,6 +72,7 @@ router.get('/carrito', (req, res) => {
   })
 })
 
+<<<<<<< HEAD
 router.get('/signup', (_, res) => res.render('signup'))
 router.post('/signup', async (req, res) => {
   const user = req.body
@@ -86,11 +95,58 @@ router.post('/signup', async (req, res) => {
   }
 })
 
+=======
+router.get('/profile', isAuth, (req, res) => {
+  res.render('profile', {
+    ...req.session.user
+  })
+})
+router.get('/signup', (_, res) => res.render('signup'))
+router.post('/signup', async (req, res) => {
+  const user = req.body
+  
+  console.log(user)
+
+  const existing = await userManager.getByEmail(user.email)
+
+  if (existing) {
+    return res.render('signup', {
+      error: 'El email ya existe'
+    })
+  }
+
+  // crear al usuario
+  try {
+    const newUser = await userManager.create(user)
+
+    req.session.user = {
+      name: newUser.firstname,
+      id: newUser._id,
+      ...newUser._doc
+    }
+
+    console.log(req.session)
+
+    req.session.save((err) => {
+      res.redirect('/')
+    })
+
+  } catch(e) {
+    return res.render('signup', {
+      error: 'Ocurrio un error. Intentalo mas tarde'
+    })
+  }
+
+  
+
+})
+>>>>>>> main
 
 router.get('/login', (_, res) => res.render('login'))
 router.post('/login', async (req, res) => {
   const { email } = req.body
 
+<<<<<<< HEAD
   // setear la cookie de usuario
 
   // guardo la session con la informacion del usuario
@@ -102,10 +158,20 @@ router.post('/login', async (req, res) => {
     }
 
     console.log(user)
+=======
+  try {
+
+    const user = await userManager.getByEmail(email)
+
+    if (!user) {
+      return res.render('login', { error: 'El usuario no existe' })
+    }
+>>>>>>> main
 
     req.session.user = {
       name: user.firstname,
       id: user._id,
+<<<<<<< HEAD
       ...user
     }
 
@@ -119,6 +185,26 @@ router.post('/login', async (req, res) => {
     console.log(e)
     res.render('login', { errors: 'usuario no existe o credenciales invalidas'})
   }
+=======
+
+      // role: 'Admin'
+      ...user
+    }
+
+    req.session.save((err) => {
+      if(!err) {
+        res.redirect('/')
+      }
+    })
+  } catch(e) {
+    res.render('login', { error: 'Ha ocurrido un error' })
+  }
+
+  // guardo la session con la informacion del usuario
+
+
+  
+>>>>>>> main
 })
 router.get('/logout', isAuth, (req, res) => {
   const { user } = req.cookies
