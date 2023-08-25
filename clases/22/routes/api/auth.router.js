@@ -72,7 +72,42 @@ router.post('/login', async (req, res) => {
 })
 
 // /api/auth/user
-router.get('/user', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get(
+    '/user', 
+    (req, res, next) => {
+        const auth = passport.authenticate('jwt', { session: false }, 
+        (err, user, info) => {
+            console.log(err, user, info)
+            // aqui hago el tratamiento de los errores
+            // una vez que el metodo done se ejecuta, cae aqui
+            if (err) return res.status(500).send({
+                error: err,
+                status: 'failure'
+            })
+
+            if (!user) {
+                return res.status(401).send({
+                    error: info.message,
+                    success: 'failure'
+                })
+            }
+
+            req.user = user
+            next()
+        })
+
+        try {
+            auth(req, res, next)
+        } catch {
+            return res.status(401).send({
+                error: 'Token invalido',
+                success: 'failure'
+            })
+        }
+
+        
+    },
+    (req, res) => {
     console.log(req.user)
 
     res.sendStatus(200)

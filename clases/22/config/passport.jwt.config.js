@@ -5,13 +5,15 @@ const JWTStrategy = jwt.Strategy
 const ExtractJWT = jwt.ExtractJwt
 
 const handler = (token, done) => {
+    console.log(token)
     try {
-        if(!authToken) {
-            done(null, false)
+        if(!authToken(token)) {
+            done(null, false, 'El token es invalido')
         } else {
             done(null, token)
         }
     } catch (e) {
+        console.log('error', e)
         done(e)
     }
 }
