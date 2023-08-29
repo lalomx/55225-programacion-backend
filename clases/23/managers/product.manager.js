@@ -1,5 +1,3 @@
-const fs = require('fs/promises')
-
 const productModel = require('../models/product.model')
 
 function getRandomNumber(min, max) {
