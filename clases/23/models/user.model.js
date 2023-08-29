@@ -5,7 +5,7 @@ const schema = new Schema({
   lastname: { type: String, index: true },
   email: { type: String, index: true },
   password: String,
-  role: { type: String, default: 'Customer' },
+  role: { type: String, default: 'Customer' }, // Admin
   gender: String,
   age: { type: Number },
   createdDate: { type: Number, default: Date.now() },

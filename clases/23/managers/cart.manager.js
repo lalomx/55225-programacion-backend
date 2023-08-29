@@ -1,56 +1,81 @@
-const fs = require('fs/promises')
-const path = require('path')
+const model = require('../models/cart.model')
 
 class CartManager {
 
-  #cartMap = []
-
-  constructor(filename) {
-    this.filename = filename
-    this.filepath = path.join(__dirname, '../data',this.filename)
+  getAll() {
+    return model.find({}).lean()
   }
 
-  #readFile = async () => {
-    const data = await fs.readFile(this.filepath, 'utf-8')
-    this.#cartMap = JSON.parse(data)
+  getAllPaged(page = 1, limit = 5) {
+    return model.paginate({}, { limit, page, lean: true })
   }
 
-  #writeFile = async() => {
-    const data = JSON.stringify(this.#cartMap, null, 2)
-    await fs.writeFile(this.filepath, data)
+  async getById(id) {
+    const entities = await model.find({ _id: id })
+
+    return entities[0]
   }
 
-  async create(userId) {
-    await this.#readFile()
-
-    this.#cartMap[userId] = { products: [] }
-
-    await this.#writeFile()
+  async create(body) {
+    return model.create(body)
   }
 
-  async addProduct(userId, productId) {
-    await this.#readFile()
+  async update(id, entities) {
+    const result = await model.updateOne({ _id: id }, entities)
 
-    const cart = this.#cartMap[userId] || { products: [] }
-
-    cart.products.push(productId)
-
-    this.#cartMap[userId] = cart
-
-    await this.#writeFile()
+    return result
   }
 
-  async getProductsByUserId(userId) {
-    await this.#readFile()
+  async delete(id) {
+    const result = await model.deleteOne({ _id: id })
 
-    const cart = this.#cartMap[userId]
+    return result
+  }
+  
+  async addProductToCart(cartId, productId) {
+    const cart = await model.findOne({ _id: cartId })
 
     if (!cart) {
-      return []
+      return false
     }
 
-    return cart.products
+    if (!cart.products.length) {
+      cart.products.push({ product: productId, qty: 1 })
+    } else {
+      const product = cart.products.find(({ product }) => product == productId)
+      product.qty++
+    }
+
+    console.log(cart)
+
+
+    await cart.save()
+
+    return true
+  }
+
+  async deleteProductFromCart(cartId, productId) {
+    const cart = await model.findOne({ _id: cartId })
+
+    if (!cart) {
+      return false
+    }
+
+    if (!cart.products.length) {
+      return false
+    } 
+
+    const product = cart.products.find(({ product }) => product == productId)
+    product.qty--
+
+    if (product.qty == 0) {
+      cart.products =  cart.products.filter(({ product }) => product != productId)
+    }
+
+    await cart.save()
+
+    return true
   }
 }
 
-module.exports = CartManager
+module.exports = new CartManager()

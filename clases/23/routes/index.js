@@ -8,12 +8,16 @@ const LoginRoutes = require('./login.router.js')
 const AdminRoutes = require('./admin.router.js')
 const AuthRoutes = require('./api/auth.router.js')
 const OrderRoutes = require('./api/orders.router.js')
+const WordsRouter = require('./api/words.router')
+const { custom: CartRoutes } = require('./api/cart.router')
 
 const api = Router();
 
 api.use('/products', apiAuth,  ProductRoutes);
 api.use('/users', apiAuth, UserRoutes);
 api.use('/orders', OrderRoutes);
+api.use('/dictionary', WordsRouter)
+api.use('/cart', CartRoutes.getRouter())
 
 // registramos el router the auth
 
