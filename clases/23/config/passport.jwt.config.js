@@ -7,11 +7,7 @@ const ExtractJWT = jwt.ExtractJwt
 const handler = (token, done) => {
     console.log(token)
     try {
-        if(!authToken(token)) {
-            done(null, false, 'El token es invalido')
-        } else {
-            done(null, token)
-        }
+        done(null, token)
     } catch (e) {
         console.log('error', e)
         done(e)

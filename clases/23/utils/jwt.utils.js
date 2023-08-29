@@ -13,9 +13,10 @@ const generateToken = (user) => {
 
 const authToken = (token) => {
     try {
-        jwt.verify(token, SECRET)
-        return true
+        console.log('token', token)
+        return jwt.verify(token, SECRET)
     } catch (e) {
+        console.log(e)
         return false
     }
 }
