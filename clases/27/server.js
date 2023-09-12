@@ -21,13 +21,15 @@
   const express = require('express')
   const handlebars = require('express-handlebars')
   const { Server } = require("socket.io");
-  const mongoose = require('mongoose')
+  
   const cookieParser = require('cookie-parser')
   const session = require('express-session')
   // const fileStore = require('session-file-store')
   const MongoStore = require('connect-mongo')
   const passport = require('passport')
+  const cors = require('cors')
 
+  const mongoService = require('./services/mongo.db')
   const config = require('./config/config')
   const Routes = require('./routes/index.js')
   const socketManager = require('./websocket')
@@ -39,7 +41,7 @@
     // conectar la base de datos antes de levantar el server
     // ${SCHEMA}://{USER}:{PASSWORD}@{HOSTNAME}:${PORT}/${DATABASE} -> LOCAL mongodb://localhost:27017/ecommerce
     // mongoose.connect("mongodb://localhost:27017/ecommerce")
-    await mongoose.connect(config.MONGO_URL)
+    await mongoService.connect()
 
     const app = express() // app express
     const server = http.createServer(app) // server http montado con express
@@ -52,6 +54,7 @@
 
     app.use(express.urlencoded({ extended: true })) // para poder parsear el body y los query params
     app.use(express.json())
+    app.use(cors())
     app.use('/static', express.static(path.join(__dirname + '/public')))
     app.use(cookieParser('esunsecreto'))
     
@@ -120,7 +123,7 @@
     // web socket
     io.on('connection', socketManager)
 
-    const port = 3000
+    const port = 8080
 
     server.listen(port, () => {
       console.log(`Express Server listening at http://localhost:${port}`)
