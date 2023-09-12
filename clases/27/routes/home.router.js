@@ -4,12 +4,15 @@ const productManager = require('../managers/product.manager')
 const isAuth = require('../middlewares/auth.middleware')
 const { long } = require('../scripts/long.operation')
 const { fork } = require('child_process')
+const MongoService = require('../services/mongo.db')
 
 const router = Router()
 
 
 router.get('/', async (req, res) => {
   // res.sendFile(path.join(__dirname, '../public/index.html'))
+  console.log('Id del singleton', MongoService.getInstance().id)
+
   const { page = 1, size = 5 } = req.query
   const { docs: products, ...pageInfo } = await productManager.getAllPaged(page, size)
 
@@ -31,6 +34,17 @@ router.get('/', async (req, res) => {
       isAdmin: req.user?.role == 'Admin',
     } : null,
     style: 'home'
+  })
+})
+
+router.get('/products', async (req, res) => {
+  // res.sendFile(path.join(__dirname, '../public/index.html'))
+  res.render('products', {
+    title: 'Home',
+    user: req.user ?  {
+      ...req.user,
+      isAdmin: req.user?.role == 'Admin',
+    } : null,
   })
 })
 

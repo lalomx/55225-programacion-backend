@@ -15,7 +15,10 @@ class ProductManager {
     return productModel.find().lean()
   }
 
+
+  // @Consumer()
   getAllPaged(page = 1, limit = 5) {
+    // el parametro es para
     return productModel.paginate({}, { limit, page, lean: true })
   }
 

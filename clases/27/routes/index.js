@@ -13,7 +13,7 @@ const { custom: CartRoutes } = require('./api/cart.router')
 
 const api = Router();
 
-api.use('/products', apiAuth,  ProductRoutes);
+api.use('/products', apiAuth, ProductRoutes);
 api.use('/users', apiAuth, UserRoutes);
 api.use('/orders', OrderRoutes);
 api.use('/dictionary', WordsRouter)
