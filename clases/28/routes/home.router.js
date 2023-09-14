@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const path = require('path')
-const productManager = require('../managers/product.manager')
+const productManager = require('../managers/product.manager.file')
 const isAuth = require('../middlewares/auth.middleware')
 const { long } = require('../scripts/long.operation')
 const { fork } = require('child_process')
