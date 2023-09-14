@@ -1,45 +1,46 @@
-const fs = require('fs/promises')
-
 const productModel = require('../models/product.model')
+const BaseManager = require('./manager.base')
 
-function getRandomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-class ProductManager {
-  constructor(filename) {
-    this.id = getRandomNumber(1, 10) // el id debe de ser el mismo ya que es un singleton
+class ProductManager extends BaseManager {
+  constructor() {
+    super(productModel)
   }
 
-  getAll() {
-    return productModel.find().lean()
-  }
+  // expandir los metodos
+  // el de user por get by email
 
-  getAllPaged(page = 1, limit = 5) {
-    return productModel.paginate({}, { limit, page, lean: true })
-  }
+  // getAll() {
+  //   return productModel.find().lean()
+  // }
 
-  async getById(id) {
-    const products = await productModel.find({ _id: id })
+  // getAllPaged(page = 1, limit = 5) {
+  //   return productModel.paginate({}, { limit, page, lean: true })
+  // }
 
-    return products[0]
-  }
+  // async getById(id) {
+  //   const products = await productModel.find({ _id: id })
 
-  async create(body) {
-    return productModel.create(body)
-  }
+  //   return products[0]
+  // }
 
-  async update(id, product) {
-    const result = await productModel.updateOne({ _id: id }, product)
+  // async create(body) {
+  //   // se puede usar el DTO aqui
 
-    return result
-  }
+  //   return productModel.create(body)
+  // }
 
-  async delete(id) {
-    const result = await productModel.deleteOne({ _id: id })
+  // async update(id, product) {
+  //   // se puede usar el DTO aqui
+  //   const result = await productModel.updateOne({ _id: id }, product)
 
-    return result
-  }
+  //   return result
+  // }
+
+  // async delete(id) {
+  //   const result = await productModel.deleteOne({ _id: id })
+
+  //   return result
+  // }
 }
 
 module.exports = new ProductManager() // singleton
