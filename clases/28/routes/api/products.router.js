@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const productManager = require('../../managers/product.manager')
+const ProductDTO = require('../../models/dto/producto.dto')
 
 const router = Router()
 
@@ -51,7 +52,13 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) =>  {
   const { body, io } = req
 
-  const product = await productManager.create(body)
+  const productDto = new ProductDTO(body)
+
+  // {
+  //  name: "Red read redemption"
+  // }
+
+  const product = await productManager.create(productDto.toObj())
 
   console.log(product)
 

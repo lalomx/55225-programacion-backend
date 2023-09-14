@@ -1,13 +1,13 @@
 const { Router } = require('express')
 const path = require('path')
-const productManager = require('../managers/product.manager.file')
 const isAuth = require('../middlewares/auth.middleware')
 const { long } = require('../scripts/long.operation')
 const { fork } = require('child_process')
 const MongoService = require('../services/mongo.db')
+const ManagerFactory = require('../managers/manager.factory')
 
 const router = Router()
-
+const productManager = ManagerFactory.getManagerInstance("products")
 
 router.get('/', async (req, res) => {
   // res.sendFile(path.join(__dirname, '../public/index.html'))
