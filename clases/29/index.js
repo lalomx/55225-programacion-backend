@@ -12,7 +12,7 @@ async function main() {
   await mongoose.connect(config.MONGO_URL) 
 
   app.use(express.json())
-  app.use(cors())
+  app.use(cors({ origin: 'http://localhost:3000', methods: ['GET', 'POST', 'PUT'] }))
   app.use(router)
 
   app.use('*', (req, res) => res.status(404).send({ error: true, message: 'not found'}))
