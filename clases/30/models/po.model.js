@@ -2,7 +2,8 @@ const { Schema, model } = require('mongoose')
 
 const schema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'users' },
-  postAddress: { type: Schema.Types.ObjectId, ref: 'addresses' },
+  code: String,
+  // postAddress: { type: Schema.Types.ObjectId, ref: 'addresses' },
   total: Number,
   products: { 
     type: [{
@@ -11,7 +12,8 @@ const schema = new Schema({
     }],
     default: []
   },
-  estimatedDelivery: Number
+  estimatedDelivery: Number,
+  purchaseDate: { type: Number, default: Date.now() }
 })
 
 const purchaseOrderModel = model('orders', schema)

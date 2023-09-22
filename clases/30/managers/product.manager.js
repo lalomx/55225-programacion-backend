@@ -12,6 +12,10 @@ class ProductManager extends BaseManager {
     return this.model.find({ sku }).lean()
   }
 
+  getById(id) {
+    return this.model.findOne({ _id: id })
+  }
+
   // mas metodos
   getProductsInPriceRange(min, max) {
     return this.model.find(
