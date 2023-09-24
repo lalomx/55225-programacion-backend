@@ -21,6 +21,10 @@ router.get('/:word([a-zA-Z]+)', (req, res) => {
     res.send(req.params.word)
 })
 
+router.get('/big-word', () => {
+  // TODO: regrsar un word muuuy grande con faker-js
+})
+
 
 // else
 router.get('*', (req, res) => {

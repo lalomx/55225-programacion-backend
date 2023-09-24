@@ -18,6 +18,7 @@
 
   const express = require('express')
   const handlebars = require('express-handlebars')
+  const compression = require('express-compression')
   const { Server } = require("socket.io");
   const MongoDbService = require('./services/mongo.db')
   const cookieParser = require('cookie-parser')
@@ -111,6 +112,9 @@
 
 
     // router
+    app.use(compression({
+      brotli: { enabled: true, zlib: {}}
+    }))
     app.use('/', Routes.home)
     app.use('/api', (req, res, next) => {
       req.io = io
@@ -120,6 +124,15 @@
     // middlewares
     // static files
     // subir archivos estaticos 
+
+    app.use((error, req, res, next) => {
+      if(error) {
+        //return 500
+        // leer el custom error
+      }
+
+      // return 401
+    })
 
     // web socket
     io.on('connection', socketManager)
