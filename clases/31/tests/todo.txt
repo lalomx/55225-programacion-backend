@@ -1,0 +1,5 @@
+// mock de user y productos
+// rever los seeders
+// user con rol y premium
+// generar el code del producto o sku
+// ocupacion de user

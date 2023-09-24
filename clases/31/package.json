@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
+    "test": "node ./tests/suma.spec.js",
     "seed:products": "node ./scripts/seed.productos.js"
   },
   "keywords": [],
