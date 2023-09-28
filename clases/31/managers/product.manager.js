@@ -1,5 +1,6 @@
 const productModel = require('../models/product.model')
 const BaseManager = require('./base.manager')
+const { generateUsers, generateProducts } = require('../utils/mock.utils.js')
 
 // repository
 // jpa en java
@@ -31,10 +32,11 @@ class ProductManager extends BaseManager {
   //   return this.model.create({ title: name })
   // }
 
-  // getAll() {
-  //   // aqui ya se sobreescribe el metodo
-  //   return this.model.find().lean()
-  // }
+  getAll() {
+    // aqui ya se sobreescribe el metodo
+    // return this.model.find().lean()
+    return generateProducts()
+  }
 
   // getAllPaged(page = 1, limit = 15) {
   //   console.log('ProductManager')

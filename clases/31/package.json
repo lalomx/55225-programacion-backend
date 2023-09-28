@@ -5,13 +5,14 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "seed:products": "node ./scripts/seed.productos.js"
+    "seed:products": "node ./scripts/seed.productos.js",
+    "test": "node ./tests/suma.spec.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@faker-js/faker": "^8.0.2",
+    "@faker-js/faker": "^8.1.0",
     "nodemon": "^2.0.22"
   },
   "dependencies": {
