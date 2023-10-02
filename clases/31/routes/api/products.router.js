@@ -1,6 +1,7 @@
 const { Router } = require('express')
 const productManager = require('../../managers/product.manager')
 const ProductDTO = require('../../models/dto/producto.dto')
+const { CustomError, ErrorType } = require('../../errors/custom.error')
 
 const router = Router()
 
@@ -27,12 +28,12 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.get('/', async (req, res) => {
+router.get('/',  (req, res, next) => {
   const { search, max, min, limit } = req.query
   console.log(`Buscando productos con ${search} y entre [${min}, ${max}]`)
-  const products = await productManager.getAll()
+  const products = []
 
-  console.log(products)
+  // console.log(products)
 
   let filtrados = products
 
@@ -46,7 +47,10 @@ router.get('/', async (req, res) => {
     filtrados = filtrados.filter(p => p.price >= (+min || 0) && p.price <= (+max || Infinity))
   }
 
-  res.send(filtrados)
+  // simular que un error ocurre
+   next(new Error("No se pudo obtener productos de la DB"))
+
+  // res.send(filtrados)
 })
 
 router.post('/', async (req, res) =>  {
@@ -109,5 +113,7 @@ router.put('/:id', async (req, res) => {
     })
   }  
 })
+
+
 
 module.exports = router

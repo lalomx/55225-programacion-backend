@@ -22,6 +22,7 @@
   const MongoDbService = require('./services/mongo.db')
   const cookieParser = require('cookie-parser')
   const session = require('express-session')
+  const compression = require('express-compression')
   // const fileStore = require('session-file-store')
   const MongoStore = require('connect-mongo')
   const passport = require('passport')
@@ -52,9 +53,12 @@
     app.engine('handlebars', handlebars.engine()) // registramos handlebars como motor de plantillas
     app.set('views', path.join(__dirname, '/views')) // el setting 'views' = directorio de vistas
     app.set('view engine', 'handlebars') // setear handlebars como motor de plantillas
-
+    app.use(compression({
+      brotli: { enabled: true, zlib: {}}, 
+    }))
     app.use(express.urlencoded({ extended: true })) // para poder parsear el body y los query params
     app.use(express.json())
+
     app.use(cors())
     app.use('/static', express.static(path.join(__dirname + '/public')))
     app.use(cookieParser('esunsecreto'))
@@ -111,6 +115,7 @@
 
 
     // router
+    
     app.use('/', Routes.home)
     app.use('/api', (req, res, next) => {
       req.io = io
@@ -122,7 +127,17 @@
     // subir archivos estaticos 
 
     // web socket
-    io.on('connection', socketManager)
+    // io.on('connection', socketManager)
+
+    app.use((err, req, res, next) => {
+      console.log('error!!')
+      console.log(err.message)
+    
+      res.send({
+        success: false,
+        error: err.stack
+      })
+    })
 
     const port = 8080
 
