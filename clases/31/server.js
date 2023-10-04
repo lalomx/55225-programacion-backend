@@ -1,6 +1,7 @@
 // IIFE Immediate Invoke Function Expression
 (async () => {
   const { Command } = require('commander')
+  const logger = require('coder55225')
 
   const program = new Command()
 
@@ -142,10 +143,10 @@
     const port = 8080
 
     server.listen(port, () => {
-      console.log(`Express Server listening at http://localhost:${port}`)
+      logger(`Express Server listening at http://localhost:${port}`)
     })
 
-    console.log('se ha conectado a la base de datos')
+    logger('se ha conectado a la base de datos')
   } catch(e) {
     console.log('no se ha podido conectar a la base de datos')
     console.log(e)
