@@ -6,7 +6,10 @@
   "scripts": {
     "start": "nodemon server.js",
     "seed:products": "node ./scripts/seed.productos.js",
-    "test": "node ./tests/suma.spec.js"
+    "test": "node ./tests/suma.spec.js",
+    "artillery": "artillery quick --count 40 --num 50 http://localhost:8080/api/test/simple -o complex.json",
+    "artillery:performance": "artillery run config.yml -o performance.json",
+    "artillery:report": "artillery report performance.json -o report.html"
   },
   "keywords": [
     ""
@@ -15,9 +18,11 @@
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^8.1.0",
+    "artillery-plugin-metrics-by-endpoint": "^1.2.0",
     "nodemon": "^3.0.1"
   },
   "dependencies": {
+    "artillery": "^2.0.0-37",
     "bcrypt": "^5.1.1",
     "coder55225": "^0.1.1",
     "commander": "^11.0.0",
