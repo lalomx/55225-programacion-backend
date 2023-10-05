@@ -33,8 +33,8 @@
   const Routes = require('./routes/index.js')
   const socketManager = require('./websocket')
   const initPassportLocal = require('./config/passport.local.config.js')
-
-  console.log(config)
+  const reqLogger = require('./middlewares/logger.middleware')
+  // console.log(config)
 
   try {
     // conectar la base de datos antes de levantar el server
@@ -51,6 +51,7 @@
     const io = new Server(server) // web socket montado en el http
     // const FileStore = fileStore(session)
 
+    app.use(reqLogger)
     app.engine('handlebars', handlebars.engine()) // registramos handlebars como motor de plantillas
     app.set('views', path.join(__dirname, '/views')) // el setting 'views' = directorio de vistas
     app.set('view engine', 'handlebars') // setear handlebars como motor de plantillas

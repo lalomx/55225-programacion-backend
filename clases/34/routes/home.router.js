@@ -107,6 +107,28 @@ router.get('/sum', (req, res) => {
   
 })
 
+router.get('/simple', (req, res) => {
+  let sum = 0
+
+  for (let i = 0; i < 1000000; i++) {
+    sum += i
+  }
+
+  res.send({ sum })
+  
+})
+
+router.get('/complex', (req, res) => {
+  let sum = 0
+
+  for (let i = 0; i < 5e8; i++) {
+    sum += i
+  }
+
+  res.send({ sum })
+  
+})
+
 router.get('/compression', (req, res) => {
   let response = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit leo metus, vitae dictum nunc venenatis a. Quisque hendrerit volutpat semper. Pellentesque tristique orci a nisl condimentum vulputate. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec ut lacus fringilla, laoreet tellus nec, euismod augue. Phasellus ut scelerisque nisi, vel iaculis tellus. Ut tempus et dolor vel iaculis. Etiam est odio, accumsan ut felis eu, interdum pretium purus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque in dignissim nunc, et mollis velit. Nulla lorem odio, pulvinar at semper in, feugiat faucibus lectus.`
   for(let i=0;i < 50000; i++) {
