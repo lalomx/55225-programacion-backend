@@ -37,15 +37,17 @@
   const loggerMiddleware = require('./middlewares/logger.middleare')
 
   // console.log(config)
+  const initPassportLocal = require('./config/passport.local.config.js')
+
+  console.log(config)
 
   try {
     // conectar la base de datos antes de levantar el server
     // ${SCHEMA}://{USER}:{PASSWORD}@{HOSTNAME}:${PORT}/${DATABASE} -> LOCAL mongodb://localhost:27017/ecommerce
     // mongoose.connect("mongodb://localhost:27017/ecommerce")
     
-    logger.warn('conectando a la DB')
     const mongoService = MongoDbService.getInstance()
-    // console.log('el ID del singleton', mongoService.id)
+    console.log('el ID del singleton', mongoService.id)
     const connection = mongoService.connection
     await connection
 
@@ -147,12 +149,13 @@
     const port = 8080
 
     server.listen(port, () => {
-      logger.info(`Express Server listening at http://localhost:${port}`)
+      logger(`Express Server listening at http://localhost:${port}`)
     })
 
-    logger.debug('se ha conectado a la base de datos')
+    logger('se ha conectado a la base de datos')
   } catch(e) {
-    logger.error('no se ha podido conectar a la base de datos')
+    console.log('no se ha podido conectar a la base de datos')
+    console.log(e)
   }
 })()
 
