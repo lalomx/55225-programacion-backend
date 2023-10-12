@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ecommerce
+  template:
+    metadata:
+      labels:
+        app: ecommerce
+    spec:
+      containers:
+      - name: ecommerce
+        image: lalomx/55225-ecommerce:2.0.0
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+        env:
+          - name: PORT
+            value: "8080"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecommerce
+spec:
+  selector:
+    app: ecommerce
+  ports:
+  - port: 3000
+    targetPort: 8080
+  type: LoadBalancer

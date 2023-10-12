@@ -12,9 +12,7 @@
     "artillery:performance": "artillery run config.yml -o performance.json",
     "artillery:report": "artillery report performance.json -o report.html"
   },
-  "keywords": [
-    ""
-  ],
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -47,5 +45,8 @@
     "socket.io": "~4.7.1",
     "twilio": "^4.18.0",
     "winston": "^3.10.0"
+  },
+  "directories": {
+    "test": "tests"
   }
 }
