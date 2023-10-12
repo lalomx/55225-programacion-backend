@@ -1,0 +1,9 @@
+version: "3.7"
+
+services:
+  ecommerce:
+    image: lalomx/55225-ecommerce
+    env_file:
+      - .env
+    
+  

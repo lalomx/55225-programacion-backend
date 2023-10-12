@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ecommerce
+  template:
+    metadata:
+      labels:
+        app: ecommerce
+    spec:
+      containers:
+      - name: ecommerce
+        image: lalomx/55225-ecommerce:latest
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: GITHUB_CLIENT_ID
+            value: "Iv1.2f445a654f138b6d"
+          - name: GITHUB_CLIENT_SECRET
+            value: "95161188af0716d0d16bf1e586391d417f52ac10"
+          - name: MONGO_URL
+            value: mongodb+srv://app2:3FF28JfLw8z5Sh1m@cluster0.go6w7.mongodb.net/ecommerce?retryWrites=true&w=majority"
+          - name: PORT
+            value: "8080"
+          - name: URL
+            value: production.com
+          - name: MANAGER_PERSISTANCE
+            value: "mongo"
+          - name: GMAIL_ADDRESS
+            value: eduardo.velazquezsierra@gmail.com
+          - name: GMAIL_PWD
+            value: "ezal zbbf upqt qfii"
+          - name: TWILIO_SID
+            value: ACedbf1a2f3c72f8b34c75139edced888e
+          - name: TWILIO_AUTH_TOKEN
+            value: a69376ccc6319156b1fdf9532fdffe7c
+          - name: TWILIO_PHONE
+            value: "+12392442364"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecommerce
+spec:
+  selector:
+    app: ecommerce
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: LoadBalancer

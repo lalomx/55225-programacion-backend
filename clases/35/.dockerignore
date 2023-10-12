@@ -1,1 +1,10 @@
 node_modules
+logs
+data
+tests
+config.yml
+github.keys
+performance.json
+complex.json
+simple.json
+report.html
