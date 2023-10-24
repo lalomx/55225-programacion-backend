@@ -9,7 +9,7 @@ const getUser = async(req,res)=> {
     const userId = req.params.uid;
     const user = await usersService.getUserById(userId);
     if(!user) return res.status(404).send({status:"error",error:"User not found"})
-    res.send({status:"success",payload:user})
+    res.send(user)
 }
 
 const updateUser =async(req,res)=>{
