@@ -1,0 +1,143 @@
+paths:
+  /api/adoptions:
+    get:
+      tags:
+        - Adoption
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/responses/GetAllAdoption'
+        500:
+          description: Failure
+  /api/adoptions/{aid}:
+    get:
+      tags:
+        - Adoption
+      parameters: 
+        - name: aid
+          in: path
+          required: true
+          description: Id de la adopcion
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/responses/GetAdoption'
+        500:
+          description: Failure
+  /api/adoptions/{uid}/{pid}:
+    post:
+      tags:
+        - Adoption
+      parameters: 
+        - name: pid
+          in: path
+          required: true
+          description: Id de la mascota
+          schema:
+            type: string
+        - name: uid
+          in: path
+          required: true
+          description: Id del usuario
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/responses/PostAdoption'
+        500:
+          description: Failure
+
+components:
+  responses:
+    PostAdoption:
+      type: object
+      properties:
+        status:
+          type: string
+        payload:
+          type: string
+    GetAdoption:
+      type: object
+      properties:
+        status:
+          type: string
+        payload:
+          type: object
+          $ref: '#components/schemas/Adoption'
+    GetAllAdoption:
+      type: object
+      properties:
+        status:
+          type: string
+        payload:
+          type: array
+          items:
+            $ref: '#components/schemas/Adoption'
+  schemas:
+    Adoption:
+      type: object
+      properties:
+        owner:
+          type: object
+          $ref: '#components/schemas/User'
+        pet:
+          type: object
+          $ref: '#components/schemas/Pet'
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+          description: Id de mongo
+        first_name:
+          type: string
+          description: Nombre de pila
+        last_name:
+          type: string
+          description: Apellido
+        role:
+          type: string
+          description: Rol del usuario
+        email:
+          type: string
+          format: email
+          description: Correo electronico del usuario
+      example:
+        _id: ObjectId('XXX')
+        first_name: Mauricio
+        last_name: Espinosa
+        email: alguien@example.com
+        role: Admin
+    Pet:
+      type: object
+      properties:
+        name:
+          type: string
+          required: true
+        specie:
+          type: string
+        birthDate:
+          type: string
+          format: date
+        adopted:
+          type: Boolean
+          default: false
+        owner:
+          type: string
+          format: ObjectId
