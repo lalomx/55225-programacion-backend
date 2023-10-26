@@ -1,0 +1,74 @@
+paths:
+  /api/pets:
+    get:
+      tags: 
+        - Pet
+      summary: Obtener todas las mascotas
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Pet'
+        500:
+          description: Failure
+    post:
+      tags: 
+        - Pet
+      summary: Crear una mascota
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Pet'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/responses/PetPostSuccess'
+        500:
+          description: Failure
+  /api/pets/{pid}:
+    put:
+      tags: 
+        - Pet
+      summary: Modificar una mascota
+    delete:
+      tags: 
+        - Pet
+      summary: Borrar una mascota
+components:
+  responses: 
+    PetPostSuccess:
+      type: object
+      properties:
+        status:
+          type: string
+        payload:
+            type: object
+            $ref: '#components/schemas/Pet'
+  schemas:
+    Pet:
+      type: object
+      properties:
+        name:
+          type: string
+          required: true
+        specie:
+          type: string
+        birthDate:
+          type: string
+          format: date
+        adopted:
+          type: Boolean
+          default: false
+        owner:
+          type: string
+          format: ObjectId
