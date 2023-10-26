@@ -1,0 +1,35 @@
+<div class="uk-margin-top">
+  <form class="uk-form-stacked" action="/admin/product/add" method="POST">
+    <div class="uk-margin">
+      <label class="uk-form-label" for="form-stacked-text">Nombre</label>
+      <div class="uk-form-controls">
+        <input id="form-stacked-nombre" class="uk-input" type="text" name="title">
+      </div>
+    </div>
+    {{!-- <div class="uk-margin">
+      <label class="uk-form-label" for="form-stacked-select">Plataforma</label>
+      <div class="uk-form-controls">
+        <select id="form-stacked-plataforma" class="uk-select" name="platform">
+          <option>PS4</option>
+          <option>Xbox</option>
+          <option>Nintendo</option>
+        </select>
+      </div>
+    </div> --}}
+    <div class="uk-margin">
+      <label class="uk-form-label" for="form-stacked-text">Precio</label>
+      <div class="uk-form-controls">
+        <input id="form-stacked-precio" class="uk-input" type="number" name="price">
+      </div>
+    </div>
+    <div class="uk-margin">
+      <label class="uk-form-label" for="form-stacked-text">Descripción</label>
+      <div class="uk-form-controls">
+        <textarea id="form-stacked-description" class="uk-textarea" rows="5" name="description"></textarea>
+      </div>
+    </div>
+    <button class="uk-button uk-button-secondary uk-button-small uk-margin-top" type="submit">Agregar</button>
+  </form>
+  </div>
+
+  <script src="/static/js/admin.js" />
