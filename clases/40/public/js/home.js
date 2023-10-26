@@ -1,1 +1,0 @@
-console.log('desde la vista de home')

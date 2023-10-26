@@ -1,52 +1,30 @@
 {
-  "name": "06",
+  "name": "plantilladocumentacion",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "nodemon server.js",
-    "seed:products": "node ./scripts/seed.productos.js",
-    "test": "node ./tests/suma.spec.js",
-    "artillery:simple": "artillery quick --count 40 --num 50 http://localhost:8080/simple -o simple.json",
-    "artillery:compleja": "artillery quick --count 40 --num 50 http://localhost:8080/api/test/compleja -o complex.json",
-    "artillery:performance": "artillery run config.yml -o performance.json",
-    "artillery:report": "artillery report performance.json -o report.html"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "mocha test/supertest.test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@faker-js/faker": "^8.1.0",
-    "artillery-plugin-metrics-by-endpoint": "^1.2.0",
-    "nodemon": "^3.0.1"
-  },
   "dependencies": {
-    "artillery": "^2.0.0-37",
-    "bcrypt": "^5.1.1",
-    "coder55225": "^0.1.1",
-    "commander": "^11.0.0",
-    "connect-mongo": "^5.0.0",
+    "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "express-compression": "^1.0.2",
-    "express-handlebars": "^7.0.7",
-    "express-session": "^1.17.3",
-    "jsonwebtoken": "^9.0.1",
-    "mongoose": "^7.4.1",
-    "mongoose-paginate-v2": "^1.7.31",
-    "nodemailer": "^6.9.5",
-    "passport": "^0.6.0",
-    "passport-github2": "^0.1.12",
-    "passport-jwt": "^4.0.1",
-    "passport-local": "^1.0.0",
-    "session-file-store": "^1.5.0",
-    "socket.io": "~4.7.1",
-    "twilio": "^4.18.0",
-    "winston": "^3.10.0"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.7.5",
+    "multer": "^1.4.5-lts.1",
+    "supertest": "^6.3.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   },
-  "directories": {
-    "test": "tests"
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.1.0"
   }
 }

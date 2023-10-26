@@ -1,0 +1,130 @@
+paths:
+  /api/users/{uid}:       
+    get:
+      summary: Obtiene un usuario por ID
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: Id del usuario
+          schema:
+            $type: String
+      responses:
+        500:
+          description: Failure
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/User'
+    put:
+      summary: Obtiene un usuario por ID
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: Id del usuario
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBoddies/updateUser'
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/User'
+        500:
+          description: Failure
+  /api/users/:       
+    get:
+      summary: Obtiene todos los users
+      tags:
+        - Users
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/User'
+        500:
+          description: Failure
+
+components:
+  requestBoddies:
+    updateUser:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id de mongo
+        first_name:
+          type: String
+        last_name:
+          type: String
+        email:
+          type: String  
+        role:
+          type: String
+        password:
+          type: String
+      example:
+        _id: ObjectId('XXX')
+        first_name: Mauricio
+        last_name: Espinosa
+        email: alguien@example.com
+        role: Admin
+        password: pas55word123
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id de mongo
+        first_name:
+          type: String
+        last_name:
+          type: String
+        email:
+          type: String  
+        role:
+          type: String
+      example:
+        _id: ObjectId('XXX')
+        first_name: Mauricio
+        last_name: Espinosa
+        email: alguien@example.com
+        role: Admin
+
+# definitions:        # Schema defination for request body
+#   signUp:
+#     type: object
+#     properties:
+#       user:
+#         type: object
+#         properties:
+#           username:
+#             type: string
+#           email:
+#             type: string
+#           password:
+#             type: string
