@@ -1,0 +1,79 @@
+paths:
+  /api/adoptions:
+    get:
+      tags:
+        - Adoption
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Adoption'
+        500:
+          description: Failure
+  /api/adoptions/{user}/{pet}:
+    post:
+      tags:
+        - Adoption
+      parameters:
+        - name: user
+          in: path
+          required: true
+          description: Id del usuario
+          schema:
+            $type: String
+        - name: pet
+          in: path
+          required: true
+          description: Id de la mascota
+          schema:
+            $type: String
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Adoption'
+        500:
+          description: Failure
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id de mongo
+        first_name:
+          type: String
+        last_name:
+          type: String
+        email:
+          type: String  
+        role:
+          type: String
+    Pet:
+      type: object
+      properties:
+        name:
+          type: String
+          required: true
+        specie:
+            type: String
+            required: true
+        birthDate: 
+          type: date,
+        adopted:
+            type: Boolean
+            default: false
+    Adoption:
+      type: object
+      properties:
+        owner:
+          $ref: '#components/schemas/User'
+        pet:
+          $ref: '#components/schemas/Pet'

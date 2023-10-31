@@ -1,0 +1,60 @@
+paths:
+  /api/pets:         # path of the user from your endpoint
+    get:
+      tags:
+       - Pets
+      summary: Obtiene todas las mascotas
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Pet'
+        500:
+          description: Failure
+    post:
+      tags:
+       - Pets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Pet'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Pet'
+        500:
+          description: Failure
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        name:
+          type: String
+          required: true
+        specie:
+            type: String
+            required: true
+        birthDate: 
+          type: date,
+        adopted:
+            type: Boolean
+            default: false
+        owner:
+            type: ObjectId,
+
+      example:
+        name: migi
+        specie: Cat
+        birthDate: '2019-03-01'
+        adopted: false
+        owner: ObjectId('xx')
