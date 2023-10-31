@@ -1,0 +1,128 @@
+paths:
+  /api/users:
+    get:
+      summary: Obtener todos los usuarios
+      tags:
+        - Users
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#components/schemas/User'
+        500:
+          description: Failure
+  /api/users/{uid}:
+    get:
+      summary: Obtener un usuario por Id
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: El id del usuario tomado de mongo
+          schema:
+            $type: string
+    put:
+      summary: Modificar un usuario por id
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: El id del usuario tomado de mongo
+          schema:
+            $type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestsBodies/updateUser'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema: 
+                $ref: '#components/schemas/Success'
+        500:
+          description: Failure
+
+    delete:
+      summary: Borrar un usuario por id
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: El id del usuario tomado de mongo
+          schema:
+            $type: string
+
+components:
+  requestsBodies:
+    updateUser:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id de mongo
+        first_name:
+          type: string
+          description: Nombre de pila
+        last_name:
+          type: string
+          description: Apellido
+        role:
+          type: string
+          description: Rol del usuario
+        email:
+          type: string
+          format: email
+          description: Correo electronico del usuario
+        password:
+          type: string
+          format: password
+          description: Password encryptada del usuario
+  schemas:
+    Success:
+      type: object
+      properties:
+        status:
+          type: string
+        message: 
+          type: string
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+          description: Id de mongo
+        first_name:
+          type: string
+          description: Nombre de pila
+        last_name:
+          type: string
+          description: Apellido
+        role:
+          type: string
+          description: Rol del usuario
+        email:
+          type: string
+          format: email
+          description: Correo electronico del usuario
+      example:
+        _id: ObjectId('XXX')
+        first_name: Mauricio
+        last_name: Espinosa
+        email: alguien@example.com
+        role: Admin
+      
