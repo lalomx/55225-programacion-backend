@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "dev": "nodemon server.js",
+    "start": "node server.js",
     "seed:products": "node ./scripts/seed.productos.js",
     "test": "node ./tests/suma.spec.js",
     "artillery:simple": "artillery quick --count 40 --num 50 http://localhost:8080/simple -o simple.json",
