@@ -28,10 +28,10 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.get('/',  (req, res, next) => {
+router.get('/',  async (req, res, next) => {
   const { search, max, min, limit } = req.query
   console.log(`Buscando productos con ${search} y entre [${min}, ${max}]`)
-  const products = []
+  const products = await productManager.getAll()
 
   // console.log(products)
 
@@ -48,9 +48,9 @@ router.get('/',  (req, res, next) => {
   }
 
   // simular que un error ocurre
-   next(new Error("No se pudo obtener productos de la DB"))
+  //  next(new Error("No se pudo obtener productos de la DB"))
 
-  // res.send(filtrados)
+  res.send(filtrados)
 })
 
 router.post('/', async (req, res) =>  {
