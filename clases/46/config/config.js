@@ -14,6 +14,9 @@ module.exports = {
     TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
     TWILIO_PHONE: process.env.TWILIO_PHONE
   },
+  stripe: {
+    KEY: process.env.STRIPE_KEY
+  },
   CONSOLE_LOG_LEVEL: 'debug',
   FILE_LOG_LEVEL: 'info'
 }

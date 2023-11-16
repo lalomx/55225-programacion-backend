@@ -10,9 +10,9 @@
 
   const { env } = program.opts()
   const path = require('path')
-  const dotenv = require('dotenv')
+  // const dotenv = require('dotenv')
   
-  dotenv.config()
+  // dotenv.config()/
 
   const http = require('http')
   

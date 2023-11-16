@@ -12,6 +12,7 @@ const WordsRouter = require('./api/words.router')
 const NotificationRoutes = require('./api/notifications.router')
 const TestRoutes = require('./api/test.router')
 const { custom: CartRoutes } = require('./api/cart.router')
+const PaymentRoutes = require('./api/payments.router.js')
 
 const api = Router();
 
@@ -22,6 +23,7 @@ api.use('/dictionary', WordsRouter)
 api.use('/cart', CartRoutes.getRouter())
 api.use('/notification', NotificationRoutes)
 api.use('/test', TestRoutes)
+api.use('/payments', PaymentRoutes)
 
 // registramos el router the auth
 
